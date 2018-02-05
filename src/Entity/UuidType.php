@@ -1,5 +1,5 @@
 <?php
-namespace KiwiSuite\CommonType\Entity;
+namespace KiwiSuite\CommonTypes\Entity;
 
 use Assert\Assertion;
 use KiwiSuite\Entity\Type\Convert\Convert;
