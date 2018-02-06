@@ -29,14 +29,6 @@ final class UuidType implements TypeInterface
     }
 
     /**
-     * @return string
-     */
-    public static function getInternalType(): string
-    {
-        return TypeInterface::TYPE_STRING;
-    }
-
-    /**
      * @param $value
      * @return mixed
      */
