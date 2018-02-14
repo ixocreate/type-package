@@ -10,7 +10,10 @@ use KiwiSuite\CommonTypes\Entity\DateTimeType;
 use KiwiSuite\CommonTypes\Entity\DateType;
 use KiwiSuite\CommonTypes\Entity\EmailType;
 use KiwiSuite\CommonTypes\Entity\UuidType;
+use KiwiSuite\Database\Type\TypeConfigurator;
+use KiwiSuite\Entity\ConfiguratorItem\TypeConfiguratorItem;
 use KiwiSuite\ServiceManager\ServiceManager;
+use KiwiSuite\ServiceManager\ServiceManagerConfigurator;
 
 final class CommonTypesBootstrap implements BootstrapInterface
 {
@@ -20,17 +23,23 @@ final class CommonTypesBootstrap implements BootstrapInterface
      */
     public function configure(ConfiguratorRegistry $configuratorRegistry): void
     {
-        $configuratorRegistry->getConfigurator('typeConfigurator')->addFactory(EmailType::class);
-        $configuratorRegistry->getConfigurator('databaseTypeConfigurator')->addType(EmailType::class, StringType::class);
+        /** @var ServiceManagerConfigurator $typeConfigurator */
+        $typeConfigurator = $configuratorRegistry->get(TypeConfiguratorItem::class);
 
-        $configuratorRegistry->getConfigurator('typeConfigurator')->addFactory(UuidType::class);
-        $configuratorRegistry->getConfigurator('databaseTypeConfigurator')->addType(UuidType::class, GuidType::class);
+        /** @var TypeConfigurator $databaseTypeConfigurator */
+        $databaseTypeConfigurator = $configuratorRegistry->get(\KiwiSuite\Database\ConfiguratorItem\TypeConfiguratorItem::class);
 
-        $configuratorRegistry->getConfigurator('typeConfigurator')->addFactory(DateTimeType::class);
-        $configuratorRegistry->getConfigurator('databaseTypeConfigurator')->addType(DateTimeType::class, \Doctrine\DBAL\Types\DateTimeType::class);
+        $typeConfigurator->addFactory(EmailType::class);
+        $databaseTypeConfigurator->addType(EmailType::class, StringType::class);
 
-        $configuratorRegistry->getConfigurator('typeConfigurator')->addFactory(DateType::class);
-        $configuratorRegistry->getConfigurator('databaseTypeConfigurator')->addType(DateType::class, \Doctrine\DBAL\Types\DateType::class);
+        $typeConfigurator->addFactory(UuidType::class);
+        $databaseTypeConfigurator->addType(UuidType::class, GuidType::class);
+
+        $typeConfigurator->addFactory(DateTimeType::class);
+        $databaseTypeConfigurator->addType(DateTimeType::class, \Doctrine\DBAL\Types\DateTimeType::class);
+
+        $typeConfigurator->addFactory(DateType::class);
+        $databaseTypeConfigurator->addType(DateType::class, \Doctrine\DBAL\Types\DateType::class);
     }
 
     /**
