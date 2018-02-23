@@ -41,4 +41,12 @@ final class UuidType implements TypeInterface
     {
         return $this->uuid->toString();
     }
+
+    /**
+     * @return string
+     */
+    public function jsonSerialize()
+    {
+        return (string)$this;
+    }
 }

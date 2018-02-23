@@ -47,4 +47,12 @@ final class EmailType implements TypeInterface
     {
         return $this->value;
     }
+
+    /**
+     * @return string
+     */
+    public function jsonSerialize()
+    {
+        return (string)$this;
+    }
 }

@@ -44,4 +44,19 @@ final class DateTimeType implements TypeInterface
         return $value;
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->dateTime->format('c');
+    }
+
+    /**
+     * @return string
+     */
+    public function jsonSerialize()
+    {
+        return (string)$this;
+    }
 }
