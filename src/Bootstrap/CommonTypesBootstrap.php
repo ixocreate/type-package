@@ -6,6 +6,7 @@ use Doctrine\DBAL\Types\StringType;
 use KiwiSuite\Application\Bootstrap\BootstrapInterface;
 use KiwiSuite\Application\ConfiguratorItem\ConfiguratorRegistry;
 use KiwiSuite\Application\Service\ServiceRegistry;
+use KiwiSuite\CommonTypes\Entity\ColorType;
 use KiwiSuite\CommonTypes\Entity\DateTimeType;
 use KiwiSuite\CommonTypes\Entity\DateType;
 use KiwiSuite\CommonTypes\Entity\EmailType;
@@ -31,6 +32,9 @@ final class CommonTypesBootstrap implements BootstrapInterface
 
         $typeConfigurator->addFactory(EmailType::class);
         $databaseTypeConfigurator->addType(EmailType::class, StringType::class);
+
+        $typeConfigurator->addFactory(ColorType::class);
+        $databaseTypeConfigurator->addType(ColorType::class, StringType::class);
 
         $typeConfigurator->addFactory(UuidType::class);
         $databaseTypeConfigurator->addType(UuidType::class, GuidType::class);
