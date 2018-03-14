@@ -12,6 +12,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1",
+        "kiwi-suite/contract": "dev-develop",
         "kiwi-suite/entity": "dev-develop",
         "kiwi-suite/database": "dev-develop",
         "beberlei/assert": "^2.9",
