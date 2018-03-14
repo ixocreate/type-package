@@ -1,9 +1,9 @@
 <?php
 /**
- * kiwi-suite/entity (https://github.com/kiwi-suite/entity)
+ * kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
  *
- * @package kiwi-suite/entity
- * @see https://github.com/kiwi-suite/entity
+ * @package kiwi-suite/common-types
+ * @see https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
  * @license MIT License
  */
