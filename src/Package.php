@@ -1,12 +1,13 @@
 <?php
 /**
- * kiwi-suite/framework (https://github.com/kiwi-suite/framework)
+ * kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
  *
- * @package kiwi-suite/framework
- * @see https://github.com/kiwi-suite/framework
+ * @package kiwi-suite/common-types
+ * @see https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
  * @license MIT License
  */
+
 declare(strict_types=1);
 namespace KiwiSuite\CommonTypes;
 
@@ -23,7 +24,6 @@ final class Package implements PackageInterface
      */
     public function configure(ConfiguratorRegistryInterface $configuratorRegistry): void
     {
-
     }
 
     /**
@@ -48,7 +48,6 @@ final class Package implements PackageInterface
      */
     public function boot(ServiceManagerInterface $serviceManager): void
     {
-
     }
 
     /**
@@ -74,6 +73,4 @@ final class Package implements PackageInterface
     {
         return null;
     }
-
-
 }
