@@ -73,4 +73,12 @@ final class Package implements PackageInterface
     {
         return null;
     }
+
+    /**
+     * @return array|null
+     */
+    public function getDependencies(): ?array
+    {
+        return null;
+    }
 }
