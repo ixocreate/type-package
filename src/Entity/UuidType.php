@@ -12,51 +12,52 @@ declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
 use Assert\Assertion;
-use KiwiSuite\Entity\Type\Convert\Convert;
-use KiwiSuite\Entity\Type\TypeInterface;
+use Doctrine\DBAL\Types\GuidType;
+use KiwiSuite\Contract\Type\DatabaseTypeInterface;
+use KiwiSuite\Entity\Type\AbstractType;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
-final class UuidType implements TypeInterface
+final class UuidType extends AbstractType implements DatabaseTypeInterface
 {
-    /**
-     * @var Uuid
-     */
-    private $uuid;
-
-    public function __construct(string $value)
-    {
-        Assertion::uuid($value);
-
-        $this->uuid = Uuid::fromString($value);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->uuid->toString();
-    }
 
     /**
      * @param $value
-     * @return mixed
+     * @return mixed|\Ramsey\Uuid\UuidInterface
+     * @throws \Assert\AssertionFailedException
      */
-    public static function convertToInternalType($value)
+    protected function transform($value)
     {
-        return Convert::convertString($value);
-    }
+        if ($value instanceof UuidInterface) {
+            return $value;
+        }
 
-    public function __toString()
-    {
-        return $this->uuid->toString();
+        Assertion::uuid($value);
+
+        return Uuid::fromString($value);
     }
 
     /**
      * @return string
      */
-    public function jsonSerialize()
+    public function __toString()
     {
-        return (string)$this;
+        return $this->value()->toString();
+    }
+
+    /**
+     * @return string
+     */
+    public function convertToDatabaseValue()
+    {
+        return (string) $this;
+    }
+
+    /**
+     * @return string
+     */
+    public static function baseDatabaseType(): string
+    {
+        return GuidType::class;
     }
 }

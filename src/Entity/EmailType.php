@@ -12,57 +12,37 @@ declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
 use Assert\Assertion;
-use KiwiSuite\Entity\Type\Convert\Convert;
-use KiwiSuite\Entity\Type\TypeInterface;
+use Doctrine\DBAL\Types\StringType;
+use KiwiSuite\Contract\Type\DatabaseTypeInterface;
+use KiwiSuite\Entity\Type\AbstractType;
 
-final class EmailType implements TypeInterface
+final class EmailType extends AbstractType implements DatabaseTypeInterface
 {
     /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * EmailType constructor.
-     * @param string $value
+     * @param $value
+     * @return string
      * @throws \Assert\AssertionFailedException
      */
-    public function __construct(string $value)
+    protected function transform($value)
     {
         Assertion::email($value);
-        $this->value = $value;
+
+        return $value;
     }
 
     /**
      * @return string
      */
-    public function getValue()
+    public function convertToDatabaseValue()
     {
-        return $this->value;
-    }
-
-    /**
-     * @param $value
-     * @return mixed
-     */
-    public static function convertToInternalType($value)
-    {
-        return Convert::convertString($value);
+        return (string) $this;
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    public static function baseDatabaseType(): string
     {
-        return $this->value;
-    }
-
-    /**
-     * @return string
-     */
-    public function jsonSerialize()
-    {
-        return (string)$this;
+        return StringType::class;
     }
 }

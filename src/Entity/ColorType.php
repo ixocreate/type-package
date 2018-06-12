@@ -11,15 +11,23 @@
 declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
-use KiwiSuite\Entity\Type\Convert\Convert;
-use KiwiSuite\Entity\Type\TypeInterface;
+use Doctrine\DBAL\Types\StringType;
+use KiwiSuite\Contract\Type\DatabaseTypeInterface;
+use KiwiSuite\Entity\Type\AbstractType;
 
-final class ColorType implements TypeInterface
+final class ColorType extends AbstractType implements DatabaseTypeInterface
 {
-    private $color;
-
-    public function __construct(string $value)
+    /**
+     * @param $value
+     * @return string
+     * @throws \Exception
+     */
+    protected function transform($value)
     {
+        if (!\is_string($value)) {
+            throw new \Exception("invalid hex color");
+        }
+
         if (\mb_substr($value, 0, 1) !== '#') {
             //TODO Exception
             throw new \Exception("invalid hex color");
@@ -40,45 +48,34 @@ final class ColorType implements TypeInterface
             throw new \Exception("invalid hex color");
         }
 
-        $this->color = $value;
+        return '#' . $value;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getValue()
+    public function toRgb()
     {
-        return '#' . $this->color;
-    }
-
-    /**
-     * @param $value
-     * @return mixed
-     */
-    public static function convertToInternalType($value)
-    {
-        return Convert::convertString($value);
-    }
-
-    public function __toString()
-    {
-        return (string)$this->getValue();
+        return [
+            'r' => \hexdec($this->value[1] . $this->value[2]),
+            'g' => \hexdec($this->value[3] . $this->value[4]),
+            'b' => \hexdec($this->value[5] . $this->value[6]),
+        ];
     }
 
     /**
      * @return string
      */
-    public function jsonSerialize()
+    public function convertToDatabaseValue()
     {
-        return $this->getValue();
+        return (string) $this;
     }
 
-    public function toRgb()
+    /**
+     * @return string
+     */
+    public static function baseDatabaseType(): string
     {
-        return [
-            'r' => \hexdec($this->color[0] . $this->color[1]),
-            'g' => \hexdec($this->color[2] . $this->color[3]),
-            'b' => \hexdec($this->color[4] . $this->color[5]),
-        ];
+        return StringType::class;
     }
 }

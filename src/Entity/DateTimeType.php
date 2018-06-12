@@ -11,47 +11,31 @@
 declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
-use KiwiSuite\Entity\Type\TypeInterface;
+use KiwiSuite\Contract\Type\DatabaseTypeInterface;
+use KiwiSuite\Entity\Type\AbstractType;
 
-final class DateTimeType implements TypeInterface
+final class DateTimeType extends AbstractType implements DatabaseTypeInterface
 {
     /**
-     * @var \DateTimeImmutable
-     */
-    private $dateTime;
-
-    /**
-     * DateTimeType constructor.
-     * @param \DateTimeInterface $value
-     */
-    public function __construct(\DateTimeInterface $value)
-    {
-        $this->dateTime = new \DateTimeImmutable('@' . $value->getTimestamp());
-    }
-
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getValue()
-    {
-        return $this->dateTime;
-    }
-
-    /**
      * @param $value
-     * @return mixed
+     * @return \DateTimeImmutable
+     * @throws \Exception
      */
-    public static function convertToInternalType($value)
+    protected function transform($value)
     {
+        if ($value instanceof \DateTimeInterface) {
+            return new \DateTimeImmutable('@' . $value->getTimestamp());
+        }
+
         if (\is_string($value)) {
             $value = \strtotime($value);
         }
 
         if (\is_int($value)) {
-            $value = new \DateTimeImmutable('@' . $value);
+            return new \DateTimeImmutable('@' . $value);
         }
 
-        return $value;
+        throw new \Exception("invalid date format");
     }
 
     /**
@@ -59,14 +43,22 @@ final class DateTimeType implements TypeInterface
      */
     public function __toString()
     {
-        return $this->dateTime->format('c');
+        return $this->value()->format('c');
     }
 
     /**
      * @return string
      */
-    public function jsonSerialize()
+    public function convertToDatabaseValue()
     {
-        return (string)$this;
+        return $this->value();
+    }
+
+    /**
+     * @return string
+     */
+    public static function baseDatabaseType(): string
+    {
+        return \Doctrine\DBAL\Types\DateTimeType::class;
     }
 }
