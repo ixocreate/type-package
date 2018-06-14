@@ -22,6 +22,7 @@
         "phpunit/phpunit": "^6.0.6",
         "friendsofphp/php-cs-fixer": "^2.0",
         "kiwi-suite/application": "dev-develop",
+        "kiwi-suite/schema": "dev-develop",
         "php-coveralls/php-coveralls": "^2.0"
     },
     "autoload": {

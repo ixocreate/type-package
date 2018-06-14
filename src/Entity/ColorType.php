@@ -12,10 +12,14 @@ declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\StringType;
+use KiwiSuite\Contract\Schema\ElementInterface;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
+use KiwiSuite\Contract\Type\SchemaElementInterface;
 use KiwiSuite\Entity\Type\AbstractType;
+use KiwiSuite\Schema\Elements\ColorElement;
+use KiwiSuite\Schema\ElementSubManager;
 
-final class ColorType extends AbstractType implements DatabaseTypeInterface
+final class ColorType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
 {
     /**
      * @param $value
@@ -77,5 +81,10 @@ final class ColorType extends AbstractType implements DatabaseTypeInterface
     public static function baseDatabaseType(): string
     {
         return StringType::class;
+    }
+
+    public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
+    {
+        return $elementSubManager->get(ColorElement::class);
     }
 }

@@ -11,10 +11,14 @@
 declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
+use KiwiSuite\Contract\Schema\ElementInterface;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
+use KiwiSuite\Contract\Type\SchemaElementInterface;
 use KiwiSuite\Entity\Type\AbstractType;
+use KiwiSuite\Schema\Elements\DateTimeElement;
+use KiwiSuite\Schema\ElementSubManager;
 
-final class DateTimeType extends AbstractType implements DatabaseTypeInterface
+final class DateTimeType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
 {
     /**
      * @param $value
@@ -60,5 +64,10 @@ final class DateTimeType extends AbstractType implements DatabaseTypeInterface
     public static function baseDatabaseType(): string
     {
         return \Doctrine\DBAL\Types\DateTimeType::class;
+    }
+
+    public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
+    {
+        return $elementSubManager->get(DateTimeElement::class);
     }
 }
