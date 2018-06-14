@@ -1,10 +1,15 @@
 <?php
 namespace KiwiSuite\CommonTypes;
 
+use KiwiSuite\CommonTypes\Entity\BlockContainerType;
+use KiwiSuite\CommonTypes\Entity\BlockType;
+use KiwiSuite\CommonTypes\Entity\CollectionType;
 use KiwiSuite\CommonTypes\Entity\ColorType;
 use KiwiSuite\CommonTypes\Entity\DateTimeType;
 use KiwiSuite\CommonTypes\Entity\DateType;
 use KiwiSuite\CommonTypes\Entity\EmailType;
+use KiwiSuite\CommonTypes\Entity\Factory\SchemaTypeFactory;
+use KiwiSuite\CommonTypes\Entity\SchemaType;
 use KiwiSuite\CommonTypes\Entity\UuidType;
 use KiwiSuite\Entity\Type\TypeConfigurator;
 
@@ -14,3 +19,7 @@ $type->addType(ColorType::class);
 $type->addType(UuidType::class);
 $type->addType(DateTimeType::class);
 $type->addType(DateType::class);
+$type->addType(CollectionType::class);
+$type->addType(BlockContainerType::class);
+$type->addType(BlockType::class);
+$type->addType(SchemaType::class, SchemaTypeFactory::class);
