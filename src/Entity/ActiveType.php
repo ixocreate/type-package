@@ -24,7 +24,6 @@ final class ActiveType extends AbstractType implements DatabaseTypeInterface
         return $value;
     }
 
-
     public function convertToDatabaseValue()
     {
         return (string) $this;
@@ -33,5 +32,10 @@ final class ActiveType extends AbstractType implements DatabaseTypeInterface
     public static function baseDatabaseType(): string
     {
         return StringType::class;
+    }
+
+    public static function serviceName(): string
+    {
+        return 'active';
     }
 }

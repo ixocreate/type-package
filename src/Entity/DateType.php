@@ -70,4 +70,9 @@ final class DateType extends AbstractType implements DatabaseTypeInterface, Sche
     {
         return $elementSubManager->get(DateElement::class);
     }
+
+    public static function serviceName(): string
+    {
+        return 'date';
+    }
 }

@@ -56,4 +56,9 @@ final class CollectionType extends AbstractType
     {
         return "";
     }
+
+    public static function serviceName(): string
+    {
+        return 'collection';
+    }
 }

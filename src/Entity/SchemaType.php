@@ -159,4 +159,9 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     {
         return JsonType::class;
     }
+
+    public static function serviceName(): string
+    {
+        return 'schema';
+    }
 }

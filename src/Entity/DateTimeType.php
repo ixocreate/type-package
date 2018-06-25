@@ -70,4 +70,9 @@ final class DateTimeType extends AbstractType implements DatabaseTypeInterface, 
     {
         return $elementSubManager->get(DateTimeElement::class);
     }
+
+    public static function serviceName(): string
+    {
+        return 'datetime';
+    }
 }

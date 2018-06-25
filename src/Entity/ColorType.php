@@ -87,4 +87,9 @@ final class ColorType extends AbstractType implements DatabaseTypeInterface, Sch
     {
         return $elementSubManager->get(ColorElement::class);
     }
+
+    public static function serviceName(): string
+    {
+        return 'color';
+    }
 }

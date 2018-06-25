@@ -60,4 +60,9 @@ final class UuidType extends AbstractType implements DatabaseTypeInterface
     {
         return GuidType::class;
     }
+
+    public static function serviceName(): string
+    {
+        return 'uuid';
+    }
 }

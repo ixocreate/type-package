@@ -11,19 +11,15 @@
 declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
-use Doctrine\DBAL\Types\JsonType;
 use KiwiSuite\Cms\Block\BlockInterface;
 use KiwiSuite\Contract\Schema\ElementInterface;
 use KiwiSuite\Contract\Schema\SchemaInterface;
-use KiwiSuite\Contract\Schema\SchemaReceiverInterface;
 use KiwiSuite\Contract\Schema\TransformableInterface;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Contract\Type\TypeInterface;
 use KiwiSuite\Entity\Entity\Definition;
 use KiwiSuite\Entity\Entity\DefinitionCollection;
 use KiwiSuite\Entity\Type\AbstractType;
 use KiwiSuite\Schema\Builder;
-use KiwiSuite\ServiceManager\ServiceManager;
 
 final class BlockType extends AbstractType
 {
@@ -110,5 +106,10 @@ final class BlockType extends AbstractType
             ['_type' => $this->getBlock()->serviceName()],
             $this->value()
         );
+    }
+
+    public static function serviceName(): string
+    {
+        return 'block';
     }
 }

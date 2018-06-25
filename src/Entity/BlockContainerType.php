@@ -138,4 +138,9 @@ final class BlockContainerType extends AbstractType
 
         return $parsedBlocks;
     }
+
+    public static function serviceName(): string
+    {
+        return 'block_container';
+    }
 }
