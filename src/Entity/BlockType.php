@@ -20,6 +20,7 @@ use KiwiSuite\Entity\Entity\Definition;
 use KiwiSuite\Entity\Entity\DefinitionCollection;
 use KiwiSuite\Entity\Type\AbstractType;
 use KiwiSuite\Schema\Builder;
+use KiwiSuite\Template\Renderer;
 
 final class BlockType extends AbstractType
 {
@@ -27,10 +28,15 @@ final class BlockType extends AbstractType
      * @var Builder
      */
     private $builder;
+    /**
+     * @var Renderer
+     */
+    private $renderer;
 
-    public function __construct(Builder $builder)
+    public function __construct(Builder $builder, Renderer $renderer)
     {
         $this->builder = $builder;
+        $this->renderer = $renderer;
     }
 
     public function create($value, array $options = []): TypeInterface
@@ -92,12 +98,20 @@ final class BlockType extends AbstractType
         return $this->options['block'];
     }
 
+    public function __debugInfo()
+    {
+        return [
+            'block' => $this->getBlock(),
+            'value' => $this->value(),
+        ];
+    }
+
     /**
      * @return string
      */
     public function __toString()
     {
-        return "";
+        return $this->renderer->render($this->getBlock()->template(), $this->value());
     }
 
     public function jsonSerialize()

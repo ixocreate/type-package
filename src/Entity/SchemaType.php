@@ -86,7 +86,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         $entityData = [];
 
         /** @var ElementInterface $element */
-        foreach ($this->getSchema()->elements() as $element) {
+        foreach ($this->getSchema()->all() as $element) {
             $definitions[] = new Definition($element->name(), $element->type(), true, true);
             $entityData[$element->name()] = null;
             if (is_array($value) && \array_key_exists($element->name(), $value)) {
@@ -128,6 +128,30 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         $this->options['schema'] = $receiver->receiveSchema($this->builder, $this->receiver['options']);
     }
 
+    public function __get($name)
+    {
+        if (array_key_exists($name, $this->value())) {
+            return $this->value()[$name];
+        }
+        
+        return new class {
+            public function __get($name)
+            {
+                return $this;
+            }
+
+            public function __call($name, $arguments)
+            {
+                return $this;
+            }
+
+            public function __toString()
+            {
+                return "";
+            }
+        };
+    }
+
     /**
      * @return string
      */
@@ -150,6 +174,11 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
             '__receiver__'  => $this->receiver,
             '__value__' => $this->value()
         ];
+    }
+
+    public function __debugInfo()
+    {
+        return $this->convertToDatabaseValue();
     }
 
     /**

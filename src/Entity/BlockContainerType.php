@@ -111,6 +111,21 @@ final class BlockContainerType extends AbstractType
         return $this->value();
     }
 
+    public function __toString()
+    {
+        $return = [];
+
+        foreach ($this->value() as $block) {
+            try {
+                $return[] = (string) $block;
+            } catch (\Throwable $exception) {
+
+            }
+
+        }
+        return implode("\n", $return);
+    }
+
     /**
      * @param array $blocks
      * @return array
@@ -137,6 +152,14 @@ final class BlockContainerType extends AbstractType
         }
 
         return $parsedBlocks;
+    }
+
+    public function __debugInfo()
+    {
+        return [
+            'blocks' => $this->blocks(),
+            'value' => $this->value(),
+        ];
     }
 
     public static function serviceName(): string
