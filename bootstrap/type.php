@@ -13,6 +13,7 @@ use KiwiSuite\CommonTypes\Entity\HtmlType;
 use KiwiSuite\CommonTypes\Entity\LinkType;
 use KiwiSuite\CommonTypes\Entity\SchemaType;
 use KiwiSuite\CommonTypes\Entity\UuidType;
+use KiwiSuite\CommonTypes\Entity\YouTubeType;
 use KiwiSuite\Entity\Type\TypeConfigurator;
 
 /** @var TypeConfigurator $type */
@@ -26,4 +27,5 @@ $type->addType(BlockContainerType::class);
 $type->addType(BlockType::class);
 $type->addType(LinkType::class);
 $type->addType(HtmlType::class);
+$type->addType(YouTubeType::class);
 $type->addType(SchemaType::class, SchemaTypeFactory::class);
