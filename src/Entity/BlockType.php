@@ -15,6 +15,7 @@ use KiwiSuite\Cms\Block\BlockInterface;
 use KiwiSuite\Contract\Schema\ElementInterface;
 use KiwiSuite\Contract\Schema\SchemaInterface;
 use KiwiSuite\Contract\Schema\TransformableInterface;
+use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Contract\Type\TypeInterface;
 use KiwiSuite\Entity\Entity\Definition;
 use KiwiSuite\Entity\Entity\DefinitionCollection;
@@ -87,7 +88,7 @@ final class BlockType extends AbstractType
      */
     private function getSchema(): SchemaInterface
     {
-        return $this->getBlock()->schema($this->builder);
+        return $this->getBlock()->receiveSchema($this->builder);
     }
 
     /**
@@ -111,7 +112,31 @@ final class BlockType extends AbstractType
      */
     public function __toString()
     {
-        return $this->renderer->render($this->getBlock()->template(), $this->value());
+        try {
+            return $this->renderer->render($this->getBlock()->template(), $this->value());
+        } catch (\Throwable $e) {
+            return "";
+        }
+
+    }
+
+    public function convertToDatabaseValue()
+    {
+        $values = [];
+
+        foreach ($this->value() as $name => $val) {
+            if ($val instanceof DatabaseTypeInterface) {
+                $values[$name] = $val->convertToDatabaseValue();
+                continue;
+            }
+
+            $values[$name] = $val;
+        }
+
+        return array_merge(
+            ['_type' => $this->getBlock()->serviceName()],
+            $values
+        );
     }
 
     public function jsonSerialize()

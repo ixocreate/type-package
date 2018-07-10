@@ -41,6 +41,39 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
      */
     protected function transform($value)
     {
+        if (!is_array($value)) {
+            return [];
+        }
+
+        if (empty($value['type'])) {
+            return [];
+        }
+
+        switch ($value['type']) {
+            case 'media':
+                if (empty($value['value']['id'])) {
+                    return [];
+                }
+
+                $value['value'] = $this->mediaRepository->find($value['value']['id']);
+
+                if (empty($value['value'])) {
+                    return [];
+                }
+                break;
+            case 'sitemap':
+                if (empty($value['value']['id'])) {
+                    return [];
+                }
+
+                $value['value'] = $this->pageRepository->find($value['value']['id']);
+
+                if (empty($value['value'])) {
+                    return [];
+                }
+                break;
+        }
+
         return $value;
     }
 
@@ -52,12 +85,29 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
         return "";
     }
 
+    public function jsonSerialize()
+    {
+        $array = $this->value();
+
+        if ($array['type'] === "media" || $array['type'] === "sitemap") {
+            $array['value'] = $array['value']->toPublicArray();
+        }
+
+        return $array;
+    }
+
     /**
      * @return string
      */
     public function convertToDatabaseValue()
     {
-        return $this->value();
+        $array = $this->value();
+
+        if ($array['type'] === "media" || $array['type'] === "sitemap") {
+            $array['value'] = (string) $array['value']->id();
+        }
+
+        return $array;
     }
 
     /**

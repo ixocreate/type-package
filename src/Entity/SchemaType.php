@@ -66,7 +66,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         if (empty($type->getSchema())) {
             throw new \Exception("Cant initialize without schema");
         }
-
+        $type->extractReceiver();
         $type->value = $type->transform($value);
 
         return $type;
@@ -89,7 +89,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         foreach ($this->getSchema()->all() as $element) {
             $definitions[] = new Definition($element->name(), $element->type(), true, true);
             $entityData[$element->name()] = null;
-            if (is_array($value) && \array_key_exists($element->name(), $value)) {
+            if (\array_key_exists($element->name(), $value)) {
                 $entityData[$element->name()] = $value[$element->name()];
             }
 
@@ -119,13 +119,43 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
             return;
         }
 
-        $receiver = $this->serviceManager->get($this->receiver['receiver']);
+        //TODO this is a dirty way of receiving the service
+        $receiver = null;
+        if ($this->serviceManager->has($this->receiver['receiver'])) {
+            $receiver = $this->serviceManager->get($this->receiver['receiver']);
+        }
+
+        if (empty($receiver)) {
+            foreach (array_keys($this->serviceManager->getServiceManagerConfig()->getSubManagers()) as $subManager) {
+                if ($this->serviceManager->get($subManager)->has($this->receiver['receiver'])) {
+                    $receiver = $this->serviceManager->get($subManager)->get($this->receiver['receiver']);
+                    break;
+                }
+            }
+        }
 
         if (! ($receiver instanceof SchemaReceiverInterface)) {
             throw new \Exception("receiver must implement " . SchemaReceiverInterface::class);
         }
 
         $this->options['schema'] = $receiver->receiveSchema($this->builder, $this->receiver['options']);
+    }
+
+    private function extractReceiver(): void
+    {
+        if (!empty($this->receiver)) {
+            return;
+        }
+
+        $receiver = $this->getSchema()->schemaReceiver();
+        if (empty($receiver)) {
+            return;
+        }
+
+        $this->receiver = [
+            'receiver' => get_class($receiver),
+            'options' => [],
+        ];
     }
 
     public function __get($name)
@@ -170,15 +200,28 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
      */
     public function convertToDatabaseValue()
     {
+        $values = [];
+
+        foreach ($this->value() as $name => $val) {
+            if ($val instanceof DatabaseTypeInterface) {
+                $values[$name] = $val->convertToDatabaseValue();
+                continue;
+            }
+
+            $values[$name] = $val;
+        }
         return [
             '__receiver__'  => $this->receiver,
-            '__value__' => $this->value()
+            '__value__' => $values
         ];
     }
 
     public function __debugInfo()
     {
-        return $this->convertToDatabaseValue();
+        return [
+            '__receiver__'  => $this->receiver,
+            '__value__' => $this->value()
+        ];
     }
 
     /**

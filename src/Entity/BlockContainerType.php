@@ -11,13 +11,14 @@
 declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
+use Doctrine\DBAL\Types\JsonType;
 use KiwiSuite\Cms\Block\BlockSubManager;
-use KiwiSuite\Contract\Schema\SchemaInterface;
+use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Contract\Type\TypeInterface;
 use KiwiSuite\Entity\Type\AbstractType;
 use KiwiSuite\Entity\Type\Type;
 
-final class BlockContainerType extends AbstractType
+final class BlockContainerType extends AbstractType implements DatabaseTypeInterface
 {
     /**
      * @var BlockSubManager
@@ -35,18 +36,23 @@ final class BlockContainerType extends AbstractType
 
     public function create($value, array $options = []): TypeInterface
     {
-        if (empty($options['blocks']) || !is_array($options['blocks'])) {
-            $options['blocks'] = ['*'];
+        if (is_array($value) && array_key_exists('__value__', $value) && array_key_exists('__blocks__', $value)) {
+            $blocks = $value['__blocks__'];
+            $value = $value['__value__'];
         }
 
-        $options['blocks'] = $this->parseBlockOption(array_values($options['blocks']));
+        if (!empty($options['blocks'])) {
+            $blocks = $options['blocks'];
+        }
+
+        if (empty($blocks) || !is_array($blocks)) {
+            $blocks = ['*'];
+        }
+
+        $options['blocks'] = $this->parseBlockOption(array_values($blocks));
 
         $type = clone $this;
         $type->options = $options;
-
-        if (empty($type->getSchema())) {
-            throw new \Exception("Cant initialize without schema");
-        }
 
         $type->value = $type->transform($value);
 
@@ -81,18 +87,6 @@ final class BlockContainerType extends AbstractType
         }
 
         return $result;
-    }
-
-    /**
-     * @return SchemaInterface|null
-     */
-    private function getSchema(): ?SchemaInterface
-    {
-        if (empty($this->options['schema'])) {
-            return null;
-        }
-
-        return $this->options['schema'];
     }
 
     /**
@@ -165,5 +159,29 @@ final class BlockContainerType extends AbstractType
     public static function serviceName(): string
     {
         return 'block_container';
+    }
+
+    public function convertToDatabaseValue()
+    {
+        $values = [];
+
+        foreach ($this->value() as $name => $val) {
+            if ($val instanceof DatabaseTypeInterface) {
+                $values[$name] = $val->convertToDatabaseValue();
+                continue;
+            }
+
+            $values[$name] = $val;
+        }
+
+        return [
+            '__blocks__'  => $this->blocks(),
+            '__value__' => $values
+        ];
+    }
+
+    public static function baseDatabaseType(): string
+    {
+        return JsonType::class;
     }
 }
