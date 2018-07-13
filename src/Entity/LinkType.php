@@ -13,8 +13,10 @@ namespace KiwiSuite\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
 use KiwiSuite\Cms\Repository\PageRepository;
+use KiwiSuite\Cms\Router\PageRoute;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Entity\Type\AbstractType;
+use KiwiSuite\Media\MediaConfig;
 use KiwiSuite\Media\Repository\MediaRepository;
 
 final class LinkType extends AbstractType implements DatabaseTypeInterface
@@ -27,11 +29,25 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
      * @var MediaRepository
      */
     private $mediaRepository;
+    /**
+     * @var PageRoute
+     */
+    private $pageRoute;
+    /**
+     * @var MediaConfig
+     */
+    private $mediaConfig;
 
-    public function __construct(PageRepository $pageRepository, MediaRepository $mediaRepository)
-    {
+    public function __construct(
+        PageRepository $pageRepository,
+        MediaRepository $mediaRepository,
+        PageRoute $pageRoute,
+        MediaConfig $mediaConfig
+    ) {
         $this->pageRepository = $pageRepository;
         $this->mediaRepository = $mediaRepository;
+        $this->pageRoute = $pageRoute;
+        $this->mediaConfig = $mediaConfig;
     }
 
 
@@ -51,22 +67,31 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
 
         switch ($value['type']) {
             case 'media':
-                if (empty($value['value']['id'])) {
-                    return [];
+                if (is_array($value['value'])) {
+                    if (empty($value['value']['id'])) {
+                        return [];
+                    }
+
+                    $value['value'] = $value['value']['id'];
                 }
 
-                $value['value'] = $this->mediaRepository->find($value['value']['id']);
+                $value['value'] = $this->mediaRepository->find($value['value']);
 
                 if (empty($value['value'])) {
                     return [];
                 }
                 break;
             case 'sitemap':
-                if (empty($value['value']['id'])) {
-                    return [];
+                if (is_array($value['value'])) {
+                    if (empty($value['value']['id'])) {
+                        return [];
+                    }
+
+                    $value['value'] = $value['value']['id'];
                 }
 
-                $value['value'] = $this->pageRepository->find($value['value']['id']);
+
+                $value['value'] = $this->pageRepository->find($value['value']);
 
                 if (empty($value['value'])) {
                     return [];
@@ -77,11 +102,37 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
         return $value;
     }
 
+    public function getType(): ?string
+    {
+        $array = $this->value();
+
+        if (empty($array)) {
+            return null;
+        }
+
+        return $array['type'];
+    }
+
     /**
      * @return string
      */
     public function __toString()
     {
+        $array = $this->value();
+
+        if (empty($array)) {
+            return "";
+        }
+
+        switch ($array['type']) {
+            case 'media':
+                return $this->assembleMediaUrl();
+            case 'sitemap':
+                return $this->assemblePageUrl();
+            case 'external':
+                return $this->assembleExternalUrl();
+        }
+
         return "";
     }
 
@@ -121,5 +172,22 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
     public static function serviceName(): string
     {
         return 'link';
+    }
+
+    private function assemblePageUrl(): string
+    {
+        return $this->pageRoute->fromPage($this->value()['value']);
+    }
+
+    private function assembleMediaUrl(): string
+    {
+        $mediaUrl = $this->mediaConfig->getUri();
+        $mediaUrl = $mediaUrl->withPath(rtrim($mediaUrl->getPath(), '/') . '/' . $this->value()['value']->basePath() . $this->value()['value']->filename());
+        return $this->pageRoute->fromPage($this->value()['value']);
+    }
+
+    private function assembleExternalUrl(): string
+    {
+        return $this->value()['value'];
     }
 }
