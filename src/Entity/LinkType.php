@@ -16,7 +16,7 @@ use KiwiSuite\Cms\Repository\PageRepository;
 use KiwiSuite\Cms\Router\PageRoute;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Media\MediaConfig;
+use KiwiSuite\Media\Config\MediaConfig;
 use KiwiSuite\Media\Repository\MediaRepository;
 
 final class LinkType extends AbstractType implements DatabaseTypeInterface
