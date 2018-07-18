@@ -16,8 +16,9 @@ use KiwiSuite\Cms\Repository\PageRepository;
 use KiwiSuite\Cms\Router\PageRoute;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Media\Config\MediaConfig;
+use KiwiSuite\Media\Entity\Media;
 use KiwiSuite\Media\Repository\MediaRepository;
+use KiwiSuite\Media\Uri\Uri;
 
 final class LinkType extends AbstractType implements DatabaseTypeInterface
 {
@@ -34,20 +35,27 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
      */
     private $pageRoute;
     /**
-     * @var MediaConfig
+     * @var Uri
      */
-    private $mediaConfig;
+    private $uri;
 
+    /**
+     * LinkType constructor.
+     * @param PageRepository $pageRepository
+     * @param MediaRepository $mediaRepository
+     * @param PageRoute $pageRoute
+     * @param Uri $uri
+     */
     public function __construct(
         PageRepository $pageRepository,
         MediaRepository $mediaRepository,
         PageRoute $pageRoute,
-        MediaConfig $mediaConfig
+        Uri $uri
     ) {
         $this->pageRepository = $pageRepository;
         $this->mediaRepository = $mediaRepository;
         $this->pageRoute = $pageRoute;
-        $this->mediaConfig = $mediaConfig;
+        $this->uri = $uri;
     }
 
 
@@ -181,9 +189,11 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
 
     private function assembleMediaUrl(): string
     {
-        $mediaUrl = $this->mediaConfig->getUri();
-        $mediaUrl = $mediaUrl->withPath(rtrim($mediaUrl->getPath(), '/') . '/' . $this->value()['value']->basePath() . $this->value()['value']->filename());
-        return $this->pageRoute->fromPage($this->value()['value']);
+        if (!($this->value()['value'] instanceof Media)) {
+            return "";
+        }
+
+        return $this->uri->url($this->value()['value']);
     }
 
     private function assembleExternalUrl(): string
