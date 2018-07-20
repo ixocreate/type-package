@@ -14,13 +14,17 @@ namespace KiwiSuite\CommonTypes\Entity;
 use Doctrine\DBAL\Types\JsonType;
 use KiwiSuite\Cms\Repository\PageRepository;
 use KiwiSuite\Cms\Router\PageRoute;
+use KiwiSuite\Contract\Schema\ElementInterface;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
+use KiwiSuite\Contract\Type\SchemaElementInterface;
 use KiwiSuite\Entity\Type\AbstractType;
 use KiwiSuite\Media\Entity\Media;
 use KiwiSuite\Media\Repository\MediaRepository;
 use KiwiSuite\Media\Uri\Uri;
+use KiwiSuite\Schema\Elements\LinkElement;
+use KiwiSuite\Schema\ElementSubManager;
 
-final class LinkType extends AbstractType implements DatabaseTypeInterface
+final class LinkType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
 {
     /**
      * @var PageRepository
@@ -199,5 +203,10 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface
     private function assembleExternalUrl(): string
     {
         return $this->value()['value'];
+    }
+
+    public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
+    {
+        return $elementSubManager->get(LinkElement::class);
     }
 }
