@@ -15,6 +15,7 @@
         "kiwi-suite/contract": "dev-develop",
         "kiwi-suite/entity": "dev-develop",
         "kiwi-suite/database": "dev-develop",
+	"deanblackborough/php-quill-renderer": "^3.14",
         "beberlei/assert": "^2.9",
         "ramsey/uuid": "^3.7"
     },
