@@ -1,4 +1,13 @@
 <?php
+/**
+ * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
+ *
+ * @package kiwi-suite/common-types
+ * @link https://github.com/kiwi-suite/common-types
+ * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
+ * @license MIT License
+ */
+
 declare(strict_types=1);
 
 namespace KiwiSuite\CommonTypes\Entity;
@@ -11,8 +20,8 @@ final class ActiveType extends AbstractType implements DatabaseTypeInterface
 {
     /**
      * @param $value
-     * @return mixed
      * @throws \Exception
+     * @return mixed
      */
     public function transform($value)
     {

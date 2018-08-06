@@ -1,9 +1,9 @@
 <?php
 /**
- * kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
+ * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
  *
  * @package kiwi-suite/common-types
- * @see https://github.com/kiwi-suite/common-types
+ * @link https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
  * @license MIT License
  */
@@ -38,7 +38,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     protected function transform($value)
     {
         $result = [];
-        if (!is_array($value) || empty($value)) {
+        if (!\is_array($value) || empty($value)) {
             return $result;
         }
 
@@ -75,7 +75,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     {
         $return = [];
         foreach ($this->value() as $name => $value) {
-            $return[$name] = array_merge(
+            $return[$name] = \array_merge(
                 ['_type' => $value['_type']],
                 $value['value']->value()
             );
@@ -105,7 +105,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     public function __debugInfo()
     {
         return [
-            'value' => $this->value()
+            'value' => $this->value(),
         ];
     }
 
@@ -119,7 +119,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
      */
     public function current()
     {
-        $value = current($this->value);
+        $value = \current($this->value);
 
         return $value['value'];
     }
@@ -129,18 +129,18 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
      */
     public function next()
     {
-        next($this->value);
+        \next($this->value);
     }
 
     /**
      * Return the key of the current element
-     * @link http://php.net/manual/en/iterator.key.php
-     * @return mixed scalar on success, or null on failure.
+     * @see http://php.net/manual/en/iterator.key.php
+     * @return mixed scalar on success, or null on failure
      * @since 5.0.0
      */
     public function key()
     {
-        return key($this->value);
+        return \key($this->value);
     }
 
     /**
@@ -148,8 +148,8 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
      */
     public function valid()
     {
-        $key = key($this->value);
-        return ($key !== null && $key !== false);
+        $key = \key($this->value);
+        return $key !== null && $key !== false;
     }
 
     /**
@@ -157,6 +157,6 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
      */
     public function rewind()
     {
-        reset($this->value);
+        \reset($this->value);
     }
 }

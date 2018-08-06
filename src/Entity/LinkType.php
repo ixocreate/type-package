@@ -1,9 +1,9 @@
 <?php
 /**
- * kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
+ * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
  *
  * @package kiwi-suite/common-types
- * @see https://github.com/kiwi-suite/common-types
+ * @link https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
  * @license MIT License
  */
@@ -69,7 +69,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
      */
     protected function transform($value)
     {
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return [];
         }
 
@@ -79,7 +79,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
 
         switch ($value['type']) {
             case 'media':
-                if (is_array($value['value'])) {
+                if (\is_array($value['value'])) {
                     if (empty($value['value']['id'])) {
                         return [];
                     }
@@ -94,7 +94,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
                 }
                 break;
             case 'sitemap':
-                if (is_array($value['value'])) {
+                if (\is_array($value['value'])) {
                     if (empty($value['value']['id'])) {
                         return [];
                     }

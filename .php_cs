@@ -1,6 +1,6 @@
 <?php
 $header = <<<'EOF'
-kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
+kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
 
 @package kiwi-suite/common-types
 @link https://github.com/kiwi-suite/common-types

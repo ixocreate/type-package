@@ -1,9 +1,9 @@
 <?php
 /**
- * kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
+ * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
  *
  * @package kiwi-suite/common-types
- * @see https://github.com/kiwi-suite/common-types
+ * @link https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
  * @license MIT License
  */
@@ -78,7 +78,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
      */
     protected function transform($value)
     {
-        if (!is_array($value) || empty($value)) {
+        if (!\is_array($value) || empty($value)) {
             return [];
         }
 
@@ -126,7 +126,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         }
 
         if (empty($receiver)) {
-            foreach (array_keys($this->serviceManager->getServiceManagerConfig()->getSubManagers()) as $subManager) {
+            foreach (\array_keys($this->serviceManager->getServiceManagerConfig()->getSubManagers()) as $subManager) {
                 if ($this->serviceManager->get($subManager)->has($this->receiver['receiver'])) {
                     $receiver = $this->serviceManager->get($subManager)->get($this->receiver['receiver']);
                     break;
@@ -153,18 +153,18 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         }
 
         $this->receiver = [
-            'receiver' => get_class($receiver),
+            'receiver' => \get_class($receiver),
             'options' => [],
         ];
     }
 
     public function __get($name)
     {
-        if (array_key_exists($name, $this->value())) {
+        if (\array_key_exists($name, $this->value())) {
             return $this->value()[$name];
         }
-        
-        return new class {
+
+        return new class() {
             public function __get($name)
             {
                 return $this;
@@ -212,7 +212,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         }
         return [
             '__receiver__'  => $this->receiver,
-            '__value__' => $values
+            '__value__' => $values,
         ];
     }
 
@@ -220,7 +220,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     {
         return [
             '__receiver__'  => $this->receiver,
-            '__value__' => $this->value()
+            '__value__' => $this->value(),
         ];
     }
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
+ * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
  *
  * @package kiwi-suite/common-types
- * @see https://github.com/kiwi-suite/common-types
+ * @link https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
  * @license MIT License
  */
@@ -23,8 +23,8 @@ final class UuidType extends AbstractType implements DatabaseTypeInterface
 
     /**
      * @param $value
-     * @return mixed|\Ramsey\Uuid\UuidInterface
      * @throws \Assert\AssertionFailedException
+     * @return mixed|\Ramsey\Uuid\UuidInterface
      */
     protected function transform($value)
     {

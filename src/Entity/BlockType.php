@@ -1,9 +1,9 @@
 <?php
 /**
- * kiwi-suite/entity (https://github.com/kiwi-suite/common-types)
+ * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
  *
  * @package kiwi-suite/common-types
- * @see https://github.com/kiwi-suite/common-types
+ * @link https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
  * @license MIT License
  */
@@ -60,7 +60,7 @@ final class BlockType extends AbstractType
      */
     protected function transform($value)
     {
-        if (!is_array($value) || empty($value)) {
+        if (!\is_array($value) || empty($value)) {
             return [];
         }
 
@@ -71,7 +71,7 @@ final class BlockType extends AbstractType
         foreach ($this->getSchema()->elements() as $element) {
             $definitions[] = new Definition($element->name(), $element->type(), true, true);
             $entityData[$element->name()] = null;
-            if (is_array($value) && \array_key_exists($element->name(), $value)) {
+            if (\is_array($value) && \array_key_exists($element->name(), $value)) {
                 $entityData[$element->name()] = $value[$element->name()];
             }
 
@@ -117,7 +117,6 @@ final class BlockType extends AbstractType
         } catch (\Throwable $e) {
             return "";
         }
-
     }
 
     public function convertToDatabaseValue()
@@ -133,7 +132,7 @@ final class BlockType extends AbstractType
             $values[$name] = $val;
         }
 
-        return array_merge(
+        return \array_merge(
             ['_type' => $this->getBlock()->serviceName()],
             $values
         );
@@ -141,7 +140,7 @@ final class BlockType extends AbstractType
 
     public function jsonSerialize()
     {
-        return array_merge(
+        return \array_merge(
             ['_type' => $this->getBlock()->serviceName()],
             $this->value()
         );
