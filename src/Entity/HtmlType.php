@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
+use function FastRoute\TestFixtures\empty_options_cached;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Entity\Type\AbstractType;
 
@@ -26,8 +27,17 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
         if (\is_string($value)) {
             return [
                 'html' => $value,
+                'quill' => null,
             ];
         }
+
+        if (is_array($value) && array_key_exists("html", $value) && array_key_exists("quill", $value)) {
+            return [
+                'html' => $value['html'],
+                'quill' => $value['quill'],
+            ];
+        }
+
         return $value;
     }
 
@@ -36,6 +46,18 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
      */
     public function __toString()
     {
+        if (empty($this->value())) {
+            return "";
+        }
+
+        /*if ($this->value()['quill'] !== null) {
+            try {
+                return (new \DBlackborough\Quill\Render(json_encode($this->value()['quill']), 'HTML'))->render();
+            } catch (\Exception $e) {
+
+            }
+        }*/
+
         return (string) $this->value()['html'];
     }
 
@@ -43,6 +65,14 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
      * @return string
      */
     public function convertToDatabaseValue()
+    {
+        return $this->value();
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
     {
         return $this->value();
     }
