@@ -154,11 +154,10 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
     {
         $array = $this->value();
 
-        if (empty($array['type'])) {
-            return $array;
+        if (empty($array)) {
+            $array['value'] = null;
         }
-
-        if ($array['type'] === "media" || $array['type'] === "sitemap") {
+        else if ($array['type'] === "media" || $array['type'] === "sitemap") {
             $array['value'] = $array['value']->toPublicArray();
         }
 
@@ -171,6 +170,14 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
     public function convertToDatabaseValue()
     {
         $array = $this->value();
+
+        if(empty($array)) {
+            /**
+             * TODO: make links removable again
+             */
+            //$array['value'] = null; // like this?
+            return null;
+        }
 
         if ($array['type'] === "media" || $array['type'] === "sitemap") {
             $array['value'] = (string)$array['value']->id();
