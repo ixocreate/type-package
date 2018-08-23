@@ -2,13 +2,14 @@
 /**
  * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
  *
- * @package kiwi-suite/common-types
- * @link https://github.com/kiwi-suite/common-types
+ * @package   kiwi-suite/common-types
+ * @link      https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
- * @license MIT License
+ * @license   MIT License
  */
 
 declare(strict_types=1);
+
 namespace KiwiSuite\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
@@ -45,10 +46,11 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
 
     /**
      * LinkType constructor.
-     * @param PageRepository $pageRepository
+     *
+     * @param PageRepository  $pageRepository
      * @param MediaRepository $mediaRepository
-     * @param PageRoute $pageRoute
-     * @param Uri $uri
+     * @param PageRoute       $pageRoute
+     * @param Uri             $uri
      */
     public function __construct(
         PageRepository $pageRepository,
@@ -166,8 +168,12 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
     {
         $array = $this->value();
 
+        if (empty($array)) {
+            return $array;
+        }
+
         if ($array['type'] === "media" || $array['type'] === "sitemap") {
-            $array['value'] = (string) $array['value']->id();
+            $array['value'] = (string)$array['value']->id();
         }
 
         return $array;
