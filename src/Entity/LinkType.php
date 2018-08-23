@@ -168,7 +168,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
     {
         $array = $this->value();
 
-        if (empty($array)) {
+        if (empty($array['type'])) {
             return $array;
         }
 
