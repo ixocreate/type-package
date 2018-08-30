@@ -17,6 +17,7 @@ use KiwiSuite\Contract\Schema\ElementInterface;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Contract\Type\SchemaElementInterface;
 use KiwiSuite\Entity\Type\AbstractType;
+use KiwiSuite\Schema\Elements\PriceElement;
 use KiwiSuite\Schema\ElementSubManager;
 
 final class PriceType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
@@ -84,6 +85,6 @@ final class PriceType extends AbstractType implements DatabaseTypeInterface, Sch
 
     public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
     {
-        // TODO: Implement schemaElement() method.
+        return $elementSubManager->get(PriceElement::class);
     }
 }

@@ -17,6 +17,7 @@ use KiwiSuite\Contract\Schema\ElementInterface;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Contract\Type\SchemaElementInterface;
 use KiwiSuite\Entity\Type\AbstractType;
+use KiwiSuite\Schema\Elements\MapElement;
 use KiwiSuite\Schema\ElementSubManager;
 
 final class MapType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
@@ -81,6 +82,6 @@ final class MapType extends AbstractType implements DatabaseTypeInterface, Schem
 
     public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
     {
-        // TODO: Implement schemaElement() method.
+        return $elementSubManager->get(MapElement::class);
     }
 }
