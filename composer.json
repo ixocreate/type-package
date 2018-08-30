@@ -15,7 +15,7 @@
         "kiwi-suite/contract": "dev-develop",
         "kiwi-suite/entity": "dev-develop",
         "kiwi-suite/database": "dev-develop",
-	"deanblackborough/php-quill-renderer": "^3.14",
+	    "deanblackborough/php-quill-renderer": "^3.14",
         "beberlei/assert": "^2.9",
         "ramsey/uuid": "^3.7"
     },
@@ -24,6 +24,8 @@
         "friendsofphp/php-cs-fixer": "^2.0",
         "kiwi-suite/application": "dev-develop",
         "kiwi-suite/schema": "dev-develop",
+        "kiwi-suite/media": "dev-develop",
+        "kiwi-suite/cms": "dev-develop",
         "php-coveralls/php-coveralls": "^2.0"
     },
     "autoload": {
