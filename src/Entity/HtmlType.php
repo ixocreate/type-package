@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace KiwiSuite\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use function FastRoute\TestFixtures\empty_options_cached;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Entity\Type\AbstractType;
 
@@ -31,7 +30,7 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
             ];
         }
 
-        if (is_array($value) && array_key_exists("html", $value) && array_key_exists("quill", $value)) {
+        if (\is_array($value) && \array_key_exists("html", $value) && \array_key_exists("quill", $value)) {
             return [
                 'html' => $value['html'],
                 'quill' => $value['quill'],

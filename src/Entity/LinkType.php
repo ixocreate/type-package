@@ -2,10 +2,10 @@
 /**
  * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
  *
- * @package   kiwi-suite/common-types
- * @link      https://github.com/kiwi-suite/common-types
+ * @package kiwi-suite/common-types
+ * @link https://github.com/kiwi-suite/common-types
  * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
- * @license   MIT License
+ * @license MIT License
  */
 
 declare(strict_types=1);
@@ -156,8 +156,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
 
         if (empty($array)) {
             $array['value'] = null;
-        }
-        else if ($array['type'] === "media" || $array['type'] === "sitemap") {
+        } elseif ($array['type'] === "media" || $array['type'] === "sitemap") {
             $array['value'] = $array['value']->toPublicArray();
         }
 
@@ -171,7 +170,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
     {
         $array = $this->value();
 
-        if(empty($array)) {
+        if (empty($array)) {
             /**
              * TODO: make links removable again
              */
