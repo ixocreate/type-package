@@ -160,6 +160,21 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
             $array['value'] = $array['value']->toPublicArray();
         }
 
+        $array['link'] = null;
+        switch ($array['type']) {
+            case 'media':
+                $array['link'] = $this->assembleMediaUrl();
+                break;
+            case 'sitemap':
+                $array['link'] = $this->assemblePageUrl();
+                break;
+            case 'external':
+                $array['link'] = $this->assembleExternalUrl();
+                break;
+            default:
+                break;
+        }
+
         return $array;
     }
 
