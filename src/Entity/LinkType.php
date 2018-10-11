@@ -113,6 +113,13 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
                 break;
         }
 
+        $target = "_self";
+        if (array_key_exists('target', $value) && in_array($value['target'], ['_self', '_blank'])) {
+            $target = $value['target'];
+        }
+
+        $value['target'] = $target;
+
         return $value;
     }
 
@@ -125,6 +132,17 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
         }
 
         return $array['type'];
+    }
+
+    public function getTarget(): string
+    {
+        $array = $this->value();
+
+        if (empty($array)) {
+            return '_self';
+        }
+
+        return $array['target'];
     }
 
     /**
