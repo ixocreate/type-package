@@ -47,7 +47,7 @@ final class DateType extends AbstractType implements DatabaseTypeInterface, Sche
      */
     public function __toString()
     {
-        return $this->value()->format('Y-m-d');
+        return ($this->value() === null) ? null : $this->value()->format('Y-m-d');
     }
 
     /**

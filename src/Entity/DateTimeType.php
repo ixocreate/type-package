@@ -47,7 +47,7 @@ final class DateTimeType extends AbstractType implements DatabaseTypeInterface, 
      */
     public function __toString()
     {
-        return $this->value()->format('c');
+        return ($this->value() === null) ? null : $this->value()->format('c');
     }
 
     /**
