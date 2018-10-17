@@ -72,6 +72,11 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
         }
 
         foreach ($value as $item) {
+            if ($item instanceof BlockType) {
+                $result[] = $item;
+                continue;
+            }
+
             if (empty($item['_type'])) {
                 continue;
             }
