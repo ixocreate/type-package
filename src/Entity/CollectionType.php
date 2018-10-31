@@ -81,7 +81,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
             }
 
             if (! ($receiver instanceof SubSchemaReceiverInterface)) {
-                throw new \Exception("receiver must implement " . SubSchemaReceiverInterface::class);
+                throw new \Exception($this->options['subSchema'] . " must implement " . SubSchemaReceiverInterface::class);
             }
 
             $this->schema = $receiver->receiveSchema($this->options['subSchemaName'], $this->builder);
