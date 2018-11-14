@@ -156,14 +156,17 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
             return "";
         }
 
-        switch ($array['type']) {
-            case 'media':
-                return $this->assembleMediaUrl();
-            case 'sitemap':
-                return $this->assemblePageUrl();
-            case 'external':
-                return $this->assembleExternalUrl();
+        if (!empty($array['type'])) {
+            switch ($array['type']) {
+                case 'media':
+                    return $this->assembleMediaUrl();
+                case 'sitemap':
+                    return $this->assemblePageUrl();
+                case 'external':
+                    return $this->assembleExternalUrl();
+            }
         }
+
 
         return "";
     }
@@ -179,18 +182,20 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
         }
 
         $array['link'] = null;
-        switch ($array['type']) {
-            case 'media':
-                $array['link'] = $this->assembleMediaUrl();
-                break;
-            case 'sitemap':
-                $array['link'] = $this->assemblePageUrl();
-                break;
-            case 'external':
-                $array['link'] = $this->assembleExternalUrl();
-                break;
-            default:
-                break;
+        if (!empty($array['type'])) {
+            switch ($array['type']) {
+                case 'media':
+                    $array['link'] = $this->assembleMediaUrl();
+                    break;
+                case 'sitemap':
+                    $array['link'] = $this->assemblePageUrl();
+                    break;
+                case 'external':
+                    $array['link'] = $this->assembleExternalUrl();
+                    break;
+                default:
+                    break;
+            }
         }
 
         return $array;
@@ -203,7 +208,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
     {
         $array = $this->value();
 
-        if (empty($array)) {
+        if (empty($array) || empty($array['type'])) {
             /**
              * TODO: make links removable again
              */
