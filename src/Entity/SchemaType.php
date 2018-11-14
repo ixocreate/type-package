@@ -50,8 +50,8 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     public function create($value, array $options = []): TypeInterface
     {
         $receiver = null;
-
-        if (isset($value['__receiver__']) && isset($value['__value__'])) {
+        
+        if (array_key_exists('__receiver__', $value) && array_key_exists('__value__', $value)) {
             $receiver = $value['__receiver__'];
             $value = $value['__value__'];
         }

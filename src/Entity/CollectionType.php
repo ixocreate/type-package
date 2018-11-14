@@ -13,22 +13,82 @@ namespace KiwiSuite\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
 use KiwiSuite\Contract\Schema\SchemaInterface;
+use KiwiSuite\Contract\Schema\SubSchemaReceiverInterface;
 use KiwiSuite\Contract\Type\DatabaseTypeInterface;
 use KiwiSuite\Entity\Type\AbstractType;
 use KiwiSuite\Entity\Type\Type;
+use KiwiSuite\Schema\Builder;
+use KiwiSuite\ServiceManager\ServiceManager;
 
 final class CollectionType extends AbstractType implements DatabaseTypeInterface, \Iterator
 {
+    /**
+     * @var SchemaInterface
+     */
+    private $schema;
+
+    /**
+     * @var ServiceManager
+     */
+    private $serviceManager;
+
+    /**
+     * @var Builder
+     */
+    private $builder;
+
+    /**
+     * CollectionType constructor.
+     * @param ServiceManager $serviceManager
+     * @param Builder $builder
+     */
+    public function __construct(ServiceManager $serviceManager, Builder $builder)
+    {
+        $this->serviceManager = $serviceManager;
+        $this->builder = $builder;
+    }
+
     /**
      * @return SchemaInterface|null
      */
     private function getSchema(): ?SchemaInterface
     {
-        if (empty($this->options['schema'])) {
-            return null;
+        if (!empty($this->schema)) {
+            return $this->schema;
         }
 
-        return $this->options['schema'];
+        if (!empty($this->options['schema'])) {
+            //TODO check instance of
+            $this->schema = $this->options['schema'];
+            return $this->schema;
+        }
+
+        if (!empty($this->options['subSchema'])) {
+
+            //TODO this is a dirty way of receiving the service
+            $receiver = null;
+            if ($this->serviceManager->has($this->options['subSchema'])) {
+                $receiver = $this->serviceManager->get($this->options['subSchema']);
+            }
+
+            if (empty($receiver)) {
+                foreach (\array_keys($this->serviceManager->getServiceManagerConfig()->getSubManagers()) as $subManager) {
+                    if ($this->serviceManager->get($subManager)->has($this->options['subSchema'])) {
+                        $receiver = $this->serviceManager->get($subManager)->get($this->options['subSchema']);
+                        break;
+                    }
+                }
+            }
+
+            if (! ($receiver instanceof SubSchemaReceiverInterface)) {
+                throw new \Exception($this->options['subSchema'] . " must implement " . SubSchemaReceiverInterface::class);
+            }
+
+            $this->schema = $receiver->receiveSchema($this->options['subSchemaName'], $this->builder);
+            return $this->schema;
+        }
+
+        //TODO Exception
     }
 
     /**
@@ -42,6 +102,17 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
             return $result;
         }
 
+        if (array_key_exists('__values__', $value) && array_key_exists('__options__', $value)) {
+            if (array_key_exists('subSchema', $value['__options__'])) {
+                $this->options['subSchema'] = $value['__options__']['subSchema'];
+            }
+            if (array_key_exists('subSchemaName', $value['__options__'])) {
+                $this->options['subSchemaName'] = $value['__options__']['subSchemaName'];
+            }
+
+            $value = $value['__values__'];
+        }
+
         foreach ($value as $item) {
             if (empty($item['_type'])) {
                 continue;
@@ -51,10 +122,17 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
                 continue;
             }
 
-            //unset($item['_type']);
+            $type = $item['_type'];
+
+            // HACK
+            if (array_key_exists('_type', $item) && array_key_exists('value', $item) && count($item) == 2) {
+                $item = $item['value'];
+            }
+
+            unset($item['_type']);
             $result[] = [
-                '_type' => $item['_type'],
-                'value' => Type::create($item, SchemaType::class, ['schema' => $this->getSchema()->get($item['_type'])]),
+                '_type' => $type,
+                'value' => Type::create($item, SchemaType::class, ['schema' => $this->getSchema()->get($type)]),
             ];
         }
 
@@ -85,6 +163,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
 
     public function convertToDatabaseValue()
     {
+        $options = [];
         $values = [];
 
         foreach ($this->value() as $name => $val) {
@@ -99,7 +178,15 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
             $values[$name] = $val;
         }
 
-        return $values;
+        if (!empty($this->options['subSchema']) && !empty($this->options['subSchemaName'])) {
+            $options['subSchema'] = $this->options['subSchema'];
+            $options['subSchemaName'] = $this->options['subSchemaName'];
+        }
+
+        return [
+            '__options__' => $options,
+            '__values__' => $values,
+        ];
     }
 
     public function __debugInfo()
