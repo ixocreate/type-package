@@ -1,14 +1,12 @@
 <?php
 /**
- * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
- *
- * @package kiwi-suite/common-types
- * @link https://github.com/kiwi-suite/common-types
- * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
+ * @link https://github.com/ixocreate
+ * @copyright IXOCREATE GmbH
  * @license MIT License
  */
 
 declare(strict_types=1);
+
 namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;

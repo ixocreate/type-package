@@ -1,14 +1,12 @@
 <?php
 /**
- * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
- *
- * @package kiwi-suite/common-types
- * @link https://github.com/kiwi-suite/common-types
- * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
+ * @link https://github.com/ixocreate
+ * @copyright IXOCREATE GmbH
  * @license MIT License
  */
 
 declare(strict_types=1);
+
 namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
@@ -102,11 +100,11 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
             return $result;
         }
 
-        if (array_key_exists('__values__', $value) && array_key_exists('__options__', $value)) {
-            if (array_key_exists('subSchema', $value['__options__'])) {
+        if (\array_key_exists('__values__', $value) && \array_key_exists('__options__', $value)) {
+            if (\array_key_exists('subSchema', $value['__options__'])) {
                 $this->options['subSchema'] = $value['__options__']['subSchema'];
             }
-            if (array_key_exists('subSchemaName', $value['__options__'])) {
+            if (\array_key_exists('subSchemaName', $value['__options__'])) {
                 $this->options['subSchemaName'] = $value['__options__']['subSchemaName'];
             }
 
@@ -125,7 +123,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
             $type = $item['_type'];
 
             // HACK
-            if (array_key_exists('_type', $item) && array_key_exists('value', $item) && count($item) == 2) {
+            if (\array_key_exists('_type', $item) && \array_key_exists('value', $item) && \count($item) == 2) {
                 $item = $item['value'];
             }
 

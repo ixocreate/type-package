@@ -1,10 +1,7 @@
 <?php
 /**
- * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
- *
- * @package kiwi-suite/common-types
- * @link https://github.com/kiwi-suite/common-types
- * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
+ * @link https://github.com/ixocreate
+ * @copyright IXOCREATE GmbH
  * @license MIT License
  */
 
@@ -31,14 +28,17 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
      * @var PageRepository
      */
     private $pageRepository;
+
     /**
      * @var MediaRepository
      */
     private $mediaRepository;
+
     /**
      * @var PageRoute
      */
     private $pageRoute;
+
     /**
      * @var Uri
      */
@@ -63,7 +63,6 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
         $this->pageRoute = $pageRoute;
         $this->uri = $uri;
     }
-
 
     /**
      * @param $value
@@ -114,7 +113,7 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
         }
 
         $target = "_self";
-        if (array_key_exists('target', $value) && in_array($value['target'], ['_self', '_blank'])) {
+        if (\array_key_exists('target', $value) && \in_array($value['target'], ['_self', '_blank'])) {
             $target = $value['target'];
         }
 

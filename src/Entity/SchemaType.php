@@ -1,14 +1,12 @@
 <?php
 /**
- * kiwi-suite/common-types (https://github.com/kiwi-suite/common-types)
- *
- * @package kiwi-suite/common-types
- * @link https://github.com/kiwi-suite/common-types
- * @copyright Copyright (c) 2010 - 2018 kiwi suite GmbH
+ * @link https://github.com/ixocreate
+ * @copyright IXOCREATE GmbH
  * @license MIT License
  */
 
 declare(strict_types=1);
+
 namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
@@ -35,6 +33,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
      * @var array|null
      */
     private $receiver;
+
     /**
      * @var Builder
      */
@@ -46,12 +45,11 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         $this->builder = $builder;
     }
 
-
     public function create($value, array $options = []): TypeInterface
     {
         $receiver = null;
-        
-        if (array_key_exists('__receiver__', $value) && array_key_exists('__value__', $value)) {
+
+        if (\array_key_exists('__receiver__', $value) && \array_key_exists('__value__', $value)) {
             $receiver = $value['__receiver__'];
             $value = $value['__value__'];
         }
