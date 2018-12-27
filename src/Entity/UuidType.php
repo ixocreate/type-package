@@ -9,12 +9,12 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
 use Assert\Assertion;
 use Doctrine\DBAL\Types\GuidType;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Entity\Type\AbstractType;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Entity\Type\AbstractType;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 

@@ -9,14 +9,14 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
-use KiwiSuite\Contract\Schema\ElementInterface;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Contract\Type\SchemaElementInterface;
-use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Schema\Elements\DateTimeElement;
-use KiwiSuite\Schema\ElementSubManager;
+use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Contract\Type\SchemaElementInterface;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Schema\Elements\DateTimeElement;
+use Ixocreate\Schema\ElementSubManager;
 
 final class DateTimeType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
 {

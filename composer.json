@@ -30,13 +30,13 @@
     },
     "autoload": {
         "psr-4": {
-            "KiwiSuite\\CommonTypes\\": "src/"
+            "Ixocreate\\CommonTypes\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "KiwiSuiteTest\\CommonTypes\\": "tests/src/",
-            "KiwiSuiteMisc\\CommonTypes\\": "tests/misc/"
+            "IxocreateTest\\CommonTypes\\": "tests/src/",
+            "IxocreateMisc\\CommonTypes\\": "tests/misc/"
         }
     }
 }

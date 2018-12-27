@@ -1,23 +1,23 @@
 <?php
-namespace KiwiSuite\CommonTypes;
+namespace Ixocreate\CommonTypes;
 
-use KiwiSuite\CommonTypes\Entity\BlockContainerType;
-use KiwiSuite\CommonTypes\Entity\BlockType;
-use KiwiSuite\CommonTypes\Entity\CollectionType;
-use KiwiSuite\CommonTypes\Entity\ColorType;
-use KiwiSuite\CommonTypes\Entity\DateTimeType;
-use KiwiSuite\CommonTypes\Entity\DateType;
-use KiwiSuite\CommonTypes\Entity\EmailType;
-use KiwiSuite\CommonTypes\Entity\Factory\CollectionTypeFactory;
-use KiwiSuite\CommonTypes\Entity\Factory\SchemaTypeFactory;
-use KiwiSuite\CommonTypes\Entity\HtmlType;
-use KiwiSuite\CommonTypes\Entity\LinkType;
-use KiwiSuite\CommonTypes\Entity\MapType;
-use KiwiSuite\CommonTypes\Entity\PriceType;
-use KiwiSuite\CommonTypes\Entity\SchemaType;
-use KiwiSuite\CommonTypes\Entity\UuidType;
-use KiwiSuite\CommonTypes\Entity\YouTubeType;
-use KiwiSuite\Entity\Type\TypeConfigurator;
+use Ixocreate\CommonTypes\Entity\BlockContainerType;
+use Ixocreate\CommonTypes\Entity\BlockType;
+use Ixocreate\CommonTypes\Entity\CollectionType;
+use Ixocreate\CommonTypes\Entity\ColorType;
+use Ixocreate\CommonTypes\Entity\DateTimeType;
+use Ixocreate\CommonTypes\Entity\DateType;
+use Ixocreate\CommonTypes\Entity\EmailType;
+use Ixocreate\CommonTypes\Entity\Factory\CollectionTypeFactory;
+use Ixocreate\CommonTypes\Entity\Factory\SchemaTypeFactory;
+use Ixocreate\CommonTypes\Entity\HtmlType;
+use Ixocreate\CommonTypes\Entity\LinkType;
+use Ixocreate\CommonTypes\Entity\MapType;
+use Ixocreate\CommonTypes\Entity\PriceType;
+use Ixocreate\CommonTypes\Entity\SchemaType;
+use Ixocreate\CommonTypes\Entity\UuidType;
+use Ixocreate\CommonTypes\Entity\YouTubeType;
+use Ixocreate\Entity\Type\TypeConfigurator;
 
 /** @var TypeConfigurator $type */
 $type->addType(EmailType::class);

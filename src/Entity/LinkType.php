@@ -10,20 +10,20 @@
 
 declare(strict_types=1);
 
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use KiwiSuite\Cms\Repository\PageRepository;
-use KiwiSuite\Cms\Router\PageRoute;
-use KiwiSuite\Contract\Schema\ElementInterface;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Contract\Type\SchemaElementInterface;
-use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Media\Entity\Media;
-use KiwiSuite\Media\Repository\MediaRepository;
-use KiwiSuite\Media\Uri\Uri;
-use KiwiSuite\Schema\Elements\LinkElement;
-use KiwiSuite\Schema\ElementSubManager;
+use Ixocreate\Cms\Repository\PageRepository;
+use Ixocreate\Cms\Router\PageRoute;
+use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Contract\Type\SchemaElementInterface;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Media\Entity\Media;
+use Ixocreate\Media\Repository\MediaRepository;
+use Ixocreate\Media\Uri\Uri;
+use Ixocreate\Schema\Elements\LinkElement;
+use Ixocreate\Schema\ElementSubManager;
 
 final class LinkType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
 {

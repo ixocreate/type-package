@@ -9,16 +9,16 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use KiwiSuite\Contract\Schema\SchemaInterface;
-use KiwiSuite\Contract\Schema\SubSchemaReceiverInterface;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Entity\Type\Type;
-use KiwiSuite\Schema\Builder;
-use KiwiSuite\ServiceManager\ServiceManager;
+use Ixocreate\Contract\Schema\SchemaInterface;
+use Ixocreate\Contract\Schema\SubSchemaReceiverInterface;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
+use Ixocreate\Schema\Builder;
+use Ixocreate\ServiceManager\ServiceManager;
 
 final class CollectionType extends AbstractType implements DatabaseTypeInterface, \Iterator
 {

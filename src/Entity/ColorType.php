@@ -9,15 +9,15 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\StringType;
-use KiwiSuite\Contract\Schema\ElementInterface;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Contract\Type\SchemaElementInterface;
-use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Schema\Elements\ColorElement;
-use KiwiSuite\Schema\ElementSubManager;
+use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Contract\Type\SchemaElementInterface;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Schema\Elements\ColorElement;
+use Ixocreate\Schema\ElementSubManager;
 
 final class ColorType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
 {

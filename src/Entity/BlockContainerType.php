@@ -9,14 +9,14 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use KiwiSuite\Cms\Block\BlockSubManager;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Contract\Type\TypeInterface;
-use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Entity\Type\Type;
+use Ixocreate\Cms\Block\BlockSubManager;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Contract\Type\TypeInterface;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
 
 final class BlockContainerType extends AbstractType implements DatabaseTypeInterface
 {

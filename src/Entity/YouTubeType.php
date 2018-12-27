@@ -9,11 +9,11 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\StringType;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Entity\Type\AbstractType;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Entity\Type\AbstractType;
 
 final class YouTubeType extends AbstractType implements DatabaseTypeInterface
 {

@@ -9,12 +9,12 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity\Factory;
+namespace Ixocreate\CommonTypes\Entity\Factory;
 
-use KiwiSuite\CommonTypes\Entity\CollectionType;
-use KiwiSuite\Contract\ServiceManager\FactoryInterface;
-use KiwiSuite\Contract\ServiceManager\ServiceManagerInterface;
-use KiwiSuite\Schema\Builder;
+use Ixocreate\CommonTypes\Entity\CollectionType;
+use Ixocreate\Contract\ServiceManager\FactoryInterface;
+use Ixocreate\Contract\ServiceManager\ServiceManagerInterface;
+use Ixocreate\Schema\Builder;
 
 final class CollectionTypeFactory implements FactoryInterface
 {

@@ -10,15 +10,15 @@
 
 declare(strict_types=1);
 
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use KiwiSuite\Contract\Schema\ElementInterface;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Contract\Type\SchemaElementInterface;
-use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Schema\Elements\MapElement;
-use KiwiSuite\Schema\ElementSubManager;
+use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Contract\Type\SchemaElementInterface;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Schema\Elements\MapElement;
+use Ixocreate\Schema\ElementSubManager;
 
 final class MapType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
 {

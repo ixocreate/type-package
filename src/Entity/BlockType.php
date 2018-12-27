@@ -9,19 +9,19 @@
  */
 
 declare(strict_types=1);
-namespace KiwiSuite\CommonTypes\Entity;
+namespace Ixocreate\CommonTypes\Entity;
 
-use KiwiSuite\Cms\Block\BlockInterface;
-use KiwiSuite\Contract\Schema\ElementInterface;
-use KiwiSuite\Contract\Schema\SchemaInterface;
-use KiwiSuite\Contract\Schema\TransformableInterface;
-use KiwiSuite\Contract\Type\DatabaseTypeInterface;
-use KiwiSuite\Contract\Type\TypeInterface;
-use KiwiSuite\Entity\Entity\Definition;
-use KiwiSuite\Entity\Entity\DefinitionCollection;
-use KiwiSuite\Entity\Type\AbstractType;
-use KiwiSuite\Schema\Builder;
-use KiwiSuite\Template\Renderer;
+use Ixocreate\Cms\Block\BlockInterface;
+use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Schema\SchemaInterface;
+use Ixocreate\Contract\Schema\TransformableInterface;
+use Ixocreate\Contract\Type\DatabaseTypeInterface;
+use Ixocreate\Contract\Type\TypeInterface;
+use Ixocreate\Entity\Entity\Definition;
+use Ixocreate\Entity\Entity\DefinitionCollection;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Schema\Builder;
+use Ixocreate\Template\Renderer;
 
 final class BlockType extends AbstractType
 {
@@ -80,7 +80,7 @@ final class BlockType extends AbstractType
             }
         }
 
-        return (new \KiwiSuite\Schema\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
+        return (new \Ixocreate\Schema\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
     }
 
     /**
