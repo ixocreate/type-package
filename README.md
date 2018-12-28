@@ -1,6 +1,6 @@
 # IXOCREATE common-types
 
-[![Build Status](https://travis-ci.org/ixocreate/common-types.svg?branch=master)](https://travis-ci.org/ixocreate/common-types)
+[![Build Status](https://travis-ci.com/ixocreate/common-types.svg?branch=master)](https://travis-ci.com/ixocreate/common-types)
 [![Coverage Status](https://coveralls.io/repos/github/ixocreate/common-types/badge.svg?branch=develop)](https://coveralls.io/github/ixocreate/common-types?branch=develop)
 [![Packagist](https://img.shields.io/packagist/v/ixocreate/common-types.svg)](https://packagist.org/packages/ixocreate/common-types)
 [![Packagist Pre Release](https://img.shields.io/packagist/vpre/ixocreate/common-types.svg)](https://packagist.org/packages/ixocreate/common-types)
