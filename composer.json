@@ -12,9 +12,9 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1",
-        "ixocreate/contract": "=1.0.0-alpha1",
-        "ixocreate/entity": "=1.0.0-alpha1",
-        "ixocreate/database": "=1.0.0-alpha1",
+        "ixocreate/contract": "dev-develop",
+        "ixocreate/entity": "dev-develop",
+        "ixocreate/database": "dev-develop",
 	    "deanblackborough/php-quill-renderer": "^3.14",
         "beberlei/assert": "^2.9",
         "ramsey/uuid": "^3.7"
@@ -23,10 +23,10 @@
         "ixocreate/coding-standard": "^1.0.1",
         "phpunit/phpunit": "^6.0.6",
         "php-coveralls/php-coveralls": "^2.0",
-        "ixocreate/application": "=1.0.0-alpha1",
-        "ixocreate/schema": "=1.0.0-alpha1",
-        "ixocreate/media": "=1.0.0-alpha1",
-        "ixocreate/cms": "=1.0.0-alpha1"
+        "ixocreate/application": "dev-develop",
+        "ixocreate/schema": "dev-develop",
+        "ixocreate/media": "dev-develop",
+        "ixocreate/cms": "dev-develop"
     },
     "autoload": {
         "psr-4": {
