@@ -12,6 +12,7 @@ namespace Ixocreate\CommonTypes\Entity;
 use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Contract\Schema\ElementInterface;
 use Ixocreate\Contract\Schema\SchemaInterface;
+use Ixocreate\Contract\Schema\SchemaProviderInterface;
 use Ixocreate\Contract\Schema\SchemaReceiverInterface;
 use Ixocreate\Contract\Schema\TransformableInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
@@ -32,7 +33,12 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     /**
      * @var array|null
      */
-    private $receiver;
+    private $provider;
+
+    /**
+     * @var SchemaInterface
+     */
+    private $schema;
 
     /**
      * @var Builder
@@ -45,26 +51,77 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         $this->builder = $builder;
     }
 
+    /**
+     * @param $value
+     * @param array $options
+     * @return TypeInterface
+     * @throws \Exception
+     */
     public function create($value, array $options = []): TypeInterface
     {
-        $receiver = null;
+        $provider = null;
 
-        if (\array_key_exists('__receiver__', $value) && \array_key_exists('__value__', $value)) {
-            $receiver = $value['__receiver__'];
+        if (\is_array($value) && \array_key_exists('__provider__', $value) && \array_key_exists('__value__', $value)) {
+            $provider = $value['__provider__'];
             $value = $value['__value__'];
         }
-        $type = clone $this;
+
+        if ($provider === null && array_key_exists('provider', $options)) {
+            $provider = $options['provider'];
+        }
+
+        if ($provider !== null) {
+            if (!is_array($provider) || !\array_key_exists('class', $provider) || !\array_key_exists('name', $provider)) {
+                throw new \Exception('Invalid schema provider');
+            }
+            if (empty($provider['options'])) {
+                $provider['options'] = [];
+            }
+        }
+
+        // TODO: remove when migration is done
+        if (\array_key_exists('__receiver__', $value) && \array_key_exists('__value__', $value)) {
+            $receiverData = $value['__receiver__'];
+            $value = $value['__value__'];
+
+            $receiver = null;
+            if ($this->serviceManager->has($receiverData['receiver'])) {
+                $receiver = $this->serviceManager->get($receiverData['receiver']);
+            }
+
+            if (empty($receiver)) {
+                foreach (\array_keys($this->serviceManager->getServiceManagerConfig()->getSubManagers()) as $subManager) {
+                    if ($this->serviceManager->get($subManager)->has($receiverData['receiver'])) {
+                        $receiver = $this->serviceManager->get($subManager)->get($receiverData['receiver']);
+                        break;
+                    }
+                }
+            }
+
+            if ($receiver instanceof SchemaReceiverInterface) {
+                $options['schema'] = $receiver->receiveSchema($this->builder, $receiverData['options']);
+            } else {
+                if (! ($receiver instanceof SchemaProviderInterface)) {
+                    throw new \Exception("receiver must implement " . SchemaProviderInterface::class . ' or ' . SchemaReceiverInterface::class);
+                }
+
+                $name = '';
+                if (!empty($receiverData['options']['pageType'])) {
+                    $name = $receiverData['options']['pageType'];
+                }
+                $provider = [
+                    'class' => $receiverData['receiver'],
+                    'name' => $name
+                ];
+
+                $options['schema'] = $receiver->provideSchema($name, $this->builder, $receiverData['options']);
+            }
+        }
+
+        $type = new SchemaType($this->serviceManager, $this->builder);
         $type->options = $options;
-        $type->receiver = $receiver;
+        $type->provider = $provider;
 
-        if (empty($type->getSchema())) {
-            $type->receiveSchema();
-        }
-
-        if (empty($type->getSchema())) {
-            throw new \Exception("Cant initialize without schema");
-        }
-        $type->extractReceiver();
         $type->value = $type->transform($value);
 
         return $type;
@@ -72,7 +129,8 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
 
     /**
      * @param $value
-     * @return mixed
+     * @return array|mixed
+     * @throws \Exception
      */
     protected function transform($value)
     {
@@ -99,61 +157,47 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
         return (new \Ixocreate\Schema\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
     }
 
-    private function getSchema(): ?SchemaInterface
-    {
-        if (empty($this->options['schema'])) {
-            return null;
-        }
-
-        return $this->options['schema'];
-    }
-
     /**
+     * @return SchemaInterface|null
      * @throws \Exception
      */
-    private function receiveSchema(): void
+    private function getSchema(): ?SchemaInterface
     {
-        if (empty($this->receiver) || empty($this->receiver['receiver']) || empty($this->receiver['options'])) {
-            return;
+        if ($this->schema !== null) {
+            return $this->schema;
         }
 
-        //TODO this is a dirty way of receiving the service
-        $receiver = null;
-        if ($this->serviceManager->has($this->receiver['receiver'])) {
-            $receiver = $this->serviceManager->get($this->receiver['receiver']);
+        if (!empty($this->options['schema']) && $this->options['schema'] instanceof SchemaInterface) {
+            $this->schema = $this->options['schema'];
+            return $this->schema;
         }
 
-        if (empty($receiver)) {
-            foreach (\array_keys($this->serviceManager->getServiceManagerConfig()->getSubManagers()) as $subManager) {
-                if ($this->serviceManager->get($subManager)->has($this->receiver['receiver'])) {
-                    $receiver = $this->serviceManager->get($subManager)->get($this->receiver['receiver']);
-                    break;
+        if (!empty($this->provider) && !empty($this->provider['class']) && !empty($this->provider['name'])) {
+
+            //TODO this is a dirty way of receiving the service
+            $provider = null;
+            if ($this->serviceManager->has($this->provider['class'])) {
+                $provider = $this->serviceManager->get($this->provider['class']);
+            }
+
+            if (empty($provider)) {
+                foreach (\array_keys($this->serviceManager->getServiceManagerConfig()->getSubManagers()) as $subManager) {
+                    if ($this->serviceManager->get($subManager)->has($this->provider['class'])) {
+                        $provider = $this->serviceManager->get($subManager)->get($this->provider['class']);
+                        break;
+                    }
                 }
             }
+
+            if (! ($provider instanceof SchemaProviderInterface)) {
+                throw new \Exception("provider must implement " . SchemaProviderInterface::class);
+            }
+
+            $this->schema = $provider->provideSchema($this->provider['name'], $this->builder, $this->provider['options']);
+            return $this->schema;
         }
 
-        if (! ($receiver instanceof SchemaReceiverInterface)) {
-            throw new \Exception("receiver must implement " . SchemaReceiverInterface::class);
-        }
-
-        $this->options['schema'] = $receiver->receiveSchema($this->builder, $this->receiver['options']);
-    }
-
-    private function extractReceiver(): void
-    {
-        if (!empty($this->receiver)) {
-            return;
-        }
-
-        $receiver = $this->getSchema()->schemaReceiver();
-        if (empty($receiver)) {
-            return;
-        }
-
-        $this->receiver = [
-            'receiver' => \get_class($receiver),
-            'options' => [],
-        ];
+        throw new \Exception("Cant initialize without schema");
     }
 
     public function __get($name)
@@ -209,7 +253,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
             $values[$name] = $val;
         }
         return [
-            '__receiver__'  => $this->receiver,
+            '__provider__'  => $this->provider,
             '__value__' => $values,
         ];
     }
@@ -217,7 +261,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     public function __debugInfo()
     {
         return [
-            '__receiver__'  => $this->receiver,
+            '__provider__'  => $this->provider,
             '__value__' => $this->value(),
         ];
     }
