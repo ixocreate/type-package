@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Ixocreate\CommonTypes\Entity;
 
+use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Cms\Block\BlockInterface;
 use Ixocreate\Contract\Schema\ElementInterface;
 use Ixocreate\Contract\Schema\SchemaInterface;
@@ -21,7 +22,7 @@ use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Builder;
 use Ixocreate\Template\Renderer;
 
-final class BlockType extends AbstractType
+final class BlockType extends AbstractType implements DatabaseTypeInterface
 {
     /**
      * @var Builder
@@ -135,6 +136,11 @@ final class BlockType extends AbstractType
             ['_type' => $this->getBlock()->serviceName()],
             $values
         );
+    }
+
+    public static function baseDatabaseType(): string
+    {
+        return JsonType::class;
     }
 
     public function jsonSerialize()
