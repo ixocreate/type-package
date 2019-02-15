@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\StringType;
+use Ixocreate\Contract\Schema\BuilderInterface;
 use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Schema\ElementProviderInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
-use Ixocreate\Contract\Type\SchemaElementInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Elements\ColorElement;
-use Ixocreate\Schema\ElementSubManager;
 
-final class ColorType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
+final class ColorType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
     /**
      * @param $value
@@ -81,13 +81,13 @@ final class ColorType extends AbstractType implements DatabaseTypeInterface, Sch
         return StringType::class;
     }
 
-    public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
-    {
-        return $elementSubManager->get(ColorElement::class);
-    }
-
     public static function serviceName(): string
     {
         return 'color';
+    }
+
+    public function provideElement(BuilderInterface $builder): ElementInterface
+    {
+        return $builder->get(ColorElement::class);
     }
 }

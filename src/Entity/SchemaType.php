@@ -78,9 +78,8 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
                 $provider['options'] = [];
             }
         }
-
         // TODO: remove when migration is done
-        if (\array_key_exists('__receiver__', $value) && \array_key_exists('__value__', $value)) {
+        if (empty($options['schema']) &&  \array_key_exists('__receiver__', $value) && \array_key_exists('__value__', $value)) {
             $receiverData = $value['__receiver__'];
             $value = $value['__value__'];
 

@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
+use Ixocreate\Contract\Schema\BuilderInterface;
 use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Schema\ElementProviderInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
-use Ixocreate\Contract\Type\SchemaElementInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Elements\PriceElement;
-use Ixocreate\Schema\ElementSubManager;
 
-final class PriceType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
+final class PriceType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
     /**
      * @param $value
@@ -80,8 +80,8 @@ final class PriceType extends AbstractType implements DatabaseTypeInterface, Sch
         return 'price';
     }
 
-    public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
+    public function provideElement(BuilderInterface $builder): ElementInterface
     {
-        return $elementSubManager->get(PriceElement::class);
+        return $builder->get(PriceElement::class);
     }
 }

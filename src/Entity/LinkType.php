@@ -12,17 +12,17 @@ namespace Ixocreate\CommonTypes\Entity;
 use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Cms\Repository\PageRepository;
 use Ixocreate\Cms\Router\PageRoute;
+use Ixocreate\Contract\Schema\BuilderInterface;
 use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Schema\ElementProviderInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
-use Ixocreate\Contract\Type\SchemaElementInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Media\Entity\Media;
 use Ixocreate\Media\Repository\MediaRepository;
 use Ixocreate\Media\Uri\Uri;
 use Ixocreate\Schema\Elements\LinkElement;
-use Ixocreate\Schema\ElementSubManager;
 
-final class LinkType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
+final class LinkType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
     /**
      * @var PageRepository
@@ -254,8 +254,8 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Sche
         return $this->value()['value'];
     }
 
-    public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
+    public function provideElement(BuilderInterface $builder): ElementInterface
     {
-        return $elementSubManager->get(LinkElement::class);
+        return $builder->get(LinkElement::class);
     }
 }

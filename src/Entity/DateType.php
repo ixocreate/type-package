@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Ixocreate\CommonTypes\Entity;
 
+use Ixocreate\Contract\Schema\BuilderInterface;
 use Ixocreate\Contract\Schema\ElementInterface;
+use Ixocreate\Contract\Schema\ElementProviderInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
-use Ixocreate\Contract\Type\SchemaElementInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Elements\DateElement;
-use Ixocreate\Schema\ElementSubManager;
 
-final class DateType extends AbstractType implements DatabaseTypeInterface, SchemaElementInterface
+final class DateType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
     /**
      * @param $value
@@ -64,13 +64,13 @@ final class DateType extends AbstractType implements DatabaseTypeInterface, Sche
         return \Doctrine\DBAL\Types\DateType::class;
     }
 
-    public function schemaElement(ElementSubManager $elementSubManager): ElementInterface
-    {
-        return $elementSubManager->get(DateElement::class);
-    }
-
     public static function serviceName(): string
     {
         return 'date';
+    }
+
+    public function provideElement(BuilderInterface $builder): ElementInterface
+    {
+        return $builder->get(DateElement::class);
     }
 }
