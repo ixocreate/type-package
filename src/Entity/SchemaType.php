@@ -14,7 +14,7 @@ use Ixocreate\Contract\Schema\ElementInterface;
 use Ixocreate\Contract\Schema\SchemaInterface;
 use Ixocreate\Contract\Schema\SchemaProviderInterface;
 use Ixocreate\Contract\Schema\SchemaReceiverInterface;
-use Ixocreate\Contract\Schema\TransformableInterface;
+use Ixocreate\Contract\Type\TransformableInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Contract\Type\TypeInterface;
 use Ixocreate\Entity\Entity\Definition;
