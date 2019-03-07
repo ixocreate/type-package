@@ -15,7 +15,7 @@
         "ixocreate/contract": "dev-develop",
         "ixocreate/entity": "dev-develop",
         "ixocreate/database": "dev-develop",
-	"deanblackborough/php-quill-renderer": "^3.14",
+        "deanblackborough/php-quill-renderer": "^3.14",
         "beberlei/assert": "^2.9",
         "ramsey/uuid": "^3.7"
     },
