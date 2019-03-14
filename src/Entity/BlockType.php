@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Ixocreate\CommonTypes\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
+use Ixocreate\Application\ApplicationConfig;
 use Ixocreate\Cms\Block\BlockInterface;
 use Ixocreate\Contract\Schema\ElementInterface;
 use Ixocreate\Contract\Schema\SchemaInterface;
@@ -34,19 +35,31 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
      */
     private $renderer;
 
-    public function __construct(Builder $builder, Renderer $renderer)
+    /**
+     * @var ApplicationConfig
+     */
+    private $applicationConfig;
+
+    public function __construct(Builder $builder, Renderer $renderer, ApplicationConfig $applicationConfig)
     {
         $this->builder = $builder;
         $this->renderer = $renderer;
+        $this->applicationConfig = $applicationConfig;
     }
 
+    /**
+     * @param $value
+     * @param array $options
+     * @return TypeInterface
+     * @throws \Exception
+     */
     public function create($value, array $options = []): TypeInterface
     {
         $type = clone $this;
         $type->options = $options;
 
         if (empty($type->getSchema())) {
-            throw new \Exception("Cant initialize without schema");
+            throw new \Exception('Cant initialize without schema');
         }
 
         $type->value = $type->transform($value);
@@ -115,7 +128,12 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
         try {
             return $this->renderer->render($this->getBlock()->template(), $this->value());
         } catch (\Throwable $e) {
-            return "";
+            if (!$this->applicationConfig->isDevelopment()) {
+                return '';
+            }
+
+            $errorResponse = 'Error in ' . $this->getBlock()->label() . " Block!\n\n" . $e;
+            return $errorResponse;
         }
     }
 
