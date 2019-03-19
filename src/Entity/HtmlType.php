@@ -12,6 +12,10 @@ namespace Ixocreate\CommonTypes\Entity;
 use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
+use nadar\quill\InlineListener;
+use nadar\quill\Lexer;
+use nadar\quill\Line;
 
 final class HtmlType extends AbstractType implements DatabaseTypeInterface
 {
@@ -47,15 +51,28 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
             return "";
         }
 
-        /*if ($this->value()['quill'] !== null) {
-            try {
-                return (new \DBlackborough\Quill\Render(json_encode($this->value()['quill']), 'HTML'))->render();
-            } catch (\Exception $e) {
+        if (empty($this->value()['quill'])) {
+            return "";
+        }
+
+        $lexer = new Lexer($this->value()['quill']);
+        $lexer->registerListener(new class extends InlineListener {
+            public function process(Line $line)
+            {
+                try {
+                    $link = $line->getAttribute('ixolink');
+                    if ($link) {
+                        /** @var LinkType $link */
+                        $link = Type::create($link, LinkType::serviceName());
+                        $this->updateInput($line, '<a href="'. (string) $link.'" target="'.$link->getTarget().'">'.$line->input.'</a>');
+                    }
+                } catch (\Exception $exception) {
+
+                }
 
             }
-        }*/
-
-        return (string) $this->value()['html'];
+        });
+        return $lexer->render();
     }
 
     /**
