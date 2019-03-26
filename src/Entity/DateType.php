@@ -37,6 +37,10 @@ final class DateType extends AbstractType implements DatabaseTypeInterface, Elem
             return new \DateTimeImmutable('@' . $value);
         }
 
+        if (\is_array($value) && \array_key_exists('date', $value) && \array_key_exists('timezone', $value)) {
+            return new \DateTimeImmutable($value['date'], new \DateTimeZone($value['timezone']));
+        }
+
         throw new \Exception("invalid date format");
     }
 
