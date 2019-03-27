@@ -86,7 +86,7 @@ final class MapType extends AbstractType implements DatabaseTypeInterface, Eleme
         if ($this->value['lng'] === null) {
             return '';
         }
-        return \json_encode($this->value['lat']);
+        return \json_encode($this->value['lng']);
     }
 
     /**
