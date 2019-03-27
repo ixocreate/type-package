@@ -16,7 +16,6 @@ use Ixocreate\Contract\Schema\ElementProviderInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Elements\MapElement;
-use Ixocreate\Schema\ElementSubManager;
 
 final class MapType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
@@ -44,12 +43,58 @@ final class MapType extends AbstractType implements DatabaseTypeInterface, Eleme
         return $default;
     }
 
+    public function lat(): ?float
+    {
+        return $this->latitude();
+    }
+
+    public function latString(): string
+    {
+        return $this->latitudeString();
+    }
+
+    public function latitude(): ?float
+    {
+        return $this->value['lat'];
+    }
+
+    public function latitudeString(): string
+    {
+        if ($this->value['lat'] === null) {
+            return '';
+        }
+        return \json_encode($this->value['lat']);
+    }
+
+    public function lng(): ?float
+    {
+        return $this->longitude();
+    }
+
+    public function lngString(): string
+    {
+        return $this->longitudeString();
+    }
+
+    public function longitude(): ?float
+    {
+        return $this->value['lng'];
+    }
+
+    public function longitudeString(): string
+    {
+        if ($this->value['lng'] === null) {
+            return '';
+        }
+        return \json_encode($this->value['lat']);
+    }
+
     /**
      * @return string
      */
     public function __toString()
     {
-        return "";
+        return '';
     }
 
     public function jsonSerialize()
