@@ -205,22 +205,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
             return $this->value()[$name];
         }
 
-        return new class() {
-            public function __get($name)
-            {
-                return $this;
-            }
-
-            public function __call($name, $arguments)
-            {
-                return $this;
-            }
-
-            public function __toString()
-            {
-                return "";
-            }
-        };
+        return null;
     }
 
     /**
@@ -228,7 +213,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
      */
     public function __toString()
     {
-        return "";
+        return '';
     }
 
     public function jsonSerialize()
