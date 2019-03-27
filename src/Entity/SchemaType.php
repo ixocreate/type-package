@@ -54,8 +54,8 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     /**
      * @param $value
      * @param array $options
-     * @return TypeInterface
      * @throws \Exception
+     * @return TypeInterface
      */
     public function create($value, array $options = []): TypeInterface
     {
@@ -66,12 +66,12 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
             $value = $value['__value__'];
         }
 
-        if ($provider === null && array_key_exists('provider', $options)) {
+        if ($provider === null && \array_key_exists('provider', $options)) {
             $provider = $options['provider'];
         }
 
         if ($provider !== null) {
-            if (!is_array($provider) || !\array_key_exists('class', $provider) || !\array_key_exists('name', $provider)) {
+            if (!\is_array($provider) || !\array_key_exists('class', $provider) || !\array_key_exists('name', $provider)) {
                 throw new \Exception('Invalid schema provider');
             }
             if (empty($provider['options'])) {
@@ -110,7 +110,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
                 }
                 $provider = [
                     'class' => $receiverData['receiver'],
-                    'name' => $name
+                    'name' => $name,
                 ];
 
                 $options['schema'] = $receiver->provideSchema($name, $this->builder, $receiverData['options']);
@@ -128,8 +128,8 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
 
     /**
      * @param $value
-     * @return array|mixed
      * @throws \Exception
+     * @return array|mixed
      */
     protected function transform($value)
     {
@@ -157,8 +157,8 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     }
 
     /**
-     * @return SchemaInterface|null
      * @throws \Exception
+     * @return SchemaInterface|null
      */
     private function getSchema(): ?SchemaInterface
     {

@@ -188,7 +188,7 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
 
     /**
      * Count elements of an object
-     * @link https://php.net/manual/en/countable.count.php
+     * @see https://php.net/manual/en/countable.count.php
      * @return int The custom count as an integer.
      * </p>
      * <p>

@@ -56,7 +56,7 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
         }
 
         $lexer = new Lexer($this->value()['quill']);
-        $lexer->registerListener(new class extends InlineListener {
+        $lexer->registerListener(new class() extends InlineListener {
             public function process(Line $line)
             {
                 try {
@@ -64,12 +64,10 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
                     if ($link) {
                         /** @var LinkType $link */
                         $link = Type::create($link, LinkType::serviceName());
-                        $this->updateInput($line, '<a href="'. (string) $link.'" target="'.$link->getTarget().'">'.$line->input.'</a>');
+                        $this->updateInput($line, '<a href="' . (string) $link . '" target="' . $link->getTarget() . '">' . $line->input . '</a>');
                     }
                 } catch (\Exception $exception) {
-
                 }
-
             }
         });
         return $lexer->render();

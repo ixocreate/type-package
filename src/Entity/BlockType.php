@@ -50,8 +50,8 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
     /**
      * @param $value
      * @param array $options
-     * @return TypeInterface
      * @throws \Exception
+     * @return TypeInterface
      */
     public function create($value, array $options = []): TypeInterface
     {
