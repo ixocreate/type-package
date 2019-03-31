@@ -21,10 +21,7 @@
         "ramsey/uuid": "^3.7"
     },
     "require-dev": {
-        "ixocreate/application": "dev-develop",
-        "ixocreate/cms": "dev-develop",
         "ixocreate/coding-standard": "^1.0.1",
-        "ixocreate/schema": "dev-develop",
         "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit": "^7.0"
     },
