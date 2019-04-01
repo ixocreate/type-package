@@ -17,6 +17,7 @@ use Ixocreate\Contract\Schema\ElementInterface;
 use Ixocreate\Contract\Schema\ElementProviderInterface;
 use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
 use Ixocreate\Media\Entity\Media;
 use Ixocreate\Media\Repository\MediaRepository;
 use Ixocreate\Media\Uri\Uri;
@@ -119,9 +120,16 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Elem
 
         $value['target'] = $target;
 
-        return $value;
+        return [
+            'type' => $value['type'],
+            'target' => $value['target'],
+            'value' => $value['value'],
+        ];
     }
 
+    /**
+     * @return string|null
+     */
     public function getType(): ?string
     {
         $array = $this->value();
@@ -133,6 +141,9 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Elem
         return $array['type'];
     }
 
+    /**
+     * @return string
+     */
     public function getTarget(): string
     {
         $array = $this->value();
@@ -170,6 +181,9 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Elem
         return "";
     }
 
+    /**
+     * @return mixed|string
+     */
     public function jsonSerialize()
     {
         $array = $this->value();
@@ -230,16 +244,25 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Elem
         return JsonType::class;
     }
 
+    /**
+     * @return string
+     */
     public static function serviceName(): string
     {
         return 'link';
     }
 
+    /**
+     * @return string
+     */
     private function assemblePageUrl(): string
     {
         return $this->pageRoute->fromPage($this->value()['value']);
     }
 
+    /**
+     * @return string
+     */
     private function assembleMediaUrl(): string
     {
         if (!($this->value()['value'] instanceof Media)) {
@@ -249,13 +272,35 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Elem
         return $this->uri->url($this->value()['value']);
     }
 
+    /**
+     * @return string
+     */
     private function assembleExternalUrl(): string
     {
         return $this->value()['value'];
     }
 
+    /**
+     * @param BuilderInterface $builder
+     * @return ElementInterface
+     */
     public function provideElement(BuilderInterface $builder): ElementInterface
     {
         return $builder->get(LinkElement::class);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        /** @var LinkType $type */
+        $type = Type::get(LinkType::serviceName());
+        $this->mediaRepository = $type->mediaRepository;
+        $this->pageRoute = $type->pageRoute;
+        $this->pageRepository = $type->pageRepository;
+        $this->uri = $type->uri;
+
+        parent::unserialize($serialized);
     }
 }

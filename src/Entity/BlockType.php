@@ -12,6 +12,7 @@ namespace Ixocreate\CommonTypes\Entity;
 use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Application\ApplicationConfig;
 use Ixocreate\Cms\Block\BlockInterface;
+use Ixocreate\Cms\Block\BlockSubManager;
 use Ixocreate\Contract\Schema\ElementInterface;
 use Ixocreate\Contract\Schema\SchemaInterface;
 use Ixocreate\Contract\Type\TransformableInterface;
@@ -20,6 +21,7 @@ use Ixocreate\Contract\Type\TypeInterface;
 use Ixocreate\Entity\Entity\Definition;
 use Ixocreate\Entity\Entity\DefinitionCollection;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
 use Ixocreate\Schema\Builder;
 use Ixocreate\Template\Renderer;
 
@@ -39,12 +41,27 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
      * @var ApplicationConfig
      */
     private $applicationConfig;
+    /**
+     * @var BlockSubManager
+     */
+    private $blockSubManager;
 
-    public function __construct(Builder $builder, Renderer $renderer, ApplicationConfig $applicationConfig)
+    /**
+     * @var BlockInterface
+     */
+    private $block;
+
+    /**
+     * @var string
+     */
+    private $blockType;
+
+    public function __construct(Builder $builder, Renderer $renderer, ApplicationConfig $applicationConfig, BlockSubManager $blockSubManager)
     {
         $this->builder = $builder;
         $this->renderer = $renderer;
         $this->applicationConfig = $applicationConfig;
+        $this->blockSubManager = $blockSubManager;
     }
 
     /**
@@ -58,6 +75,7 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
         $type = clone $this;
         $type->options = $options;
 
+        $type->blockType = $options['type'];
         if (empty($type->getSchema())) {
             throw new \Exception('Cant initialize without schema');
         }
@@ -109,7 +127,11 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
      */
     private function getBlock(): BlockInterface
     {
-        return $this->options['block'];
+        if ($this->block === null) {
+            $this->block = $this->blockSubManager->get($this->blockType);
+        }
+
+        return $this->block;
     }
 
     public function __debugInfo()
@@ -172,5 +194,30 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
     public static function serviceName(): string
     {
         return 'block';
+    }
+
+    /**
+     * @return string|void
+     */
+    public function serialize()
+    {
+        return serialize([
+            'value' => $this->value,
+            'blockType' => $this->blockType
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        /** @var BlockType $type */
+        $type = Type::get(BlockType::serviceName());
+        $this->builder = $type->builder;
+        $this->renderer = $type->renderer;
+        $this->applicationConfig = $type->applicationConfig;
+        $this->blockSubManager = $type->blockSubManager;
+
+        $unserialized = \unserialize($serialized);
+        $this->value = $unserialized['value'];
+        $this->blockType = $unserialized['blockType'];
     }
 }

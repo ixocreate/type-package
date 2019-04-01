@@ -82,11 +82,9 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
             if (!$this->blockSubManager->has($item['_type'])) {
                 continue;
             }
-
-            $block = $this->blockSubManager->get($item['_type']);
-
+            $type = $item['_type'];
             unset($item['_type']);
-            $result[] = Type::create($item, BlockType::class, ['block' => $block]);
+            $result[] = Type::create($item, BlockType::class, ['type' => $type]);
         }
 
         return $result;

@@ -47,7 +47,10 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     }
 
     /**
+     * Doesn't work when the object is unserialized!
+     *
      * @return SchemaInterface|null
+     * @throws \Exception
      */
     private function getSchema(): ?SchemaInterface
     {
@@ -92,6 +95,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     /**
      * @param $value
      * @return mixed
+     * @throws \Exception
      */
     protected function transform($value)
     {
@@ -243,5 +247,18 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     public function rewind()
     {
         \reset($this->value);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        /** @var CollectionType $type */
+        $type = Type::get(CollectionType::serviceName());
+        $this->serviceManager = $type->serviceManager;
+        $this->builder = $type->builder;
+
+        parent::unserialize($serialized);
     }
 }

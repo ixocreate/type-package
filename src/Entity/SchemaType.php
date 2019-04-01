@@ -20,10 +20,11 @@ use Ixocreate\Contract\Type\TypeInterface;
 use Ixocreate\Entity\Entity\Definition;
 use Ixocreate\Entity\Entity\DefinitionCollection;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
 use Ixocreate\Schema\Builder;
 use Ixocreate\ServiceManager\ServiceManager;
 
-final class SchemaType extends AbstractType implements DatabaseTypeInterface
+final class SchemaType extends AbstractType implements DatabaseTypeInterface, \Serializable
 {
     /**
      * @var ServiceManager
@@ -45,6 +46,11 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
      */
     private $builder;
 
+    /**
+     * SchemaType constructor.
+     * @param ServiceManager $serviceManager
+     * @param Builder $builder
+     */
     public function __construct(ServiceManager $serviceManager, Builder $builder)
     {
         $this->serviceManager = $serviceManager;
@@ -157,6 +163,8 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     }
 
     /**
+     * Doesn't work when the object is unserialized!
+     *
      * @throws \Exception
      * @return SchemaInterface|null
      */
@@ -261,5 +269,19 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface
     public static function serviceName(): string
     {
         return 'schema';
+    }
+
+    /**
+     * @param string $serialized
+     * @throws \Exception
+     */
+    public function unserialize($serialized)
+    {
+        /** @var SchemaType $schemaType */
+        $schemaType = Type::get(SchemaType::serviceName());
+        $this->builder = $schemaType->builder;
+        $this->serviceManager = $schemaType->serviceManager;
+
+        parent::unserialize($serialized);
     }
 }
