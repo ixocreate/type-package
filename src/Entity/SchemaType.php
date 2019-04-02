@@ -216,6 +216,15 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
         return null;
     }
 
+    public function __isset($name)
+    {
+        if (\array_key_exists($name, $this->value())) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * @return string
      */
