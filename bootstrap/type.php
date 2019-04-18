@@ -1,4 +1,5 @@
 <?php
+
 namespace Ixocreate\Type;
 
 use Ixocreate\Type\Entity\BlockContainerType;
@@ -17,9 +18,9 @@ use Ixocreate\Type\Entity\PriceType;
 use Ixocreate\Type\Entity\SchemaType;
 use Ixocreate\Type\Entity\UuidType;
 use Ixocreate\Type\Entity\YouTubeType;
-use Ixocreate\Entity\Type\TypeConfigurator;
 
 /** @var TypeConfigurator $type */
+
 $type->addType(EmailType::class);
 $type->addType(ColorType::class);
 $type->addType(UuidType::class);

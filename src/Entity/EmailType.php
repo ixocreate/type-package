@@ -11,8 +11,8 @@ namespace Ixocreate\Type\Entity;
 
 use Assert\Assertion;
 use Doctrine\DBAL\Types\StringType;
-use Ixocreate\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class EmailType extends AbstractType implements DatabaseTypeInterface
 {
@@ -33,7 +33,7 @@ final class EmailType extends AbstractType implements DatabaseTypeInterface
      */
     public function convertToDatabaseValue()
     {
-        return (string) $this;
+        return (string)$this;
     }
 
     /**

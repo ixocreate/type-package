@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Ixocreate\Type\Entity\Factory;
 
-use Ixocreate\Type\Entity\CollectionType;
+use Ixocreate\Schema\Builder;
 use Ixocreate\ServiceManager\FactoryInterface;
 use Ixocreate\ServiceManager\ServiceManagerInterface;
-use Ixocreate\Schema\Builder;
+use Ixocreate\Type\Entity\CollectionType;
 
 final class CollectionTypeFactory implements FactoryInterface
 {

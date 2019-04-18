@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\StringType;
+use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\BuilderInterface;
 use Ixocreate\Schema\ElementInterface;
 use Ixocreate\Schema\ElementProviderInterface;
-use Ixocreate\Type\DatabaseTypeInterface;
-use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Elements\ColorElement;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class ColorType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
@@ -70,7 +70,7 @@ final class ColorType extends AbstractType implements DatabaseTypeInterface, Ele
      */
     public function convertToDatabaseValue()
     {
-        return (string) $this;
+        return (string)$this;
     }
 
     /**

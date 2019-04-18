@@ -13,17 +13,17 @@ use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Application\ApplicationConfig;
 use Ixocreate\Cms\Block\BlockInterface;
 use Ixocreate\Cms\Block\BlockSubManager;
-use Ixocreate\Schema\ElementInterface;
-use Ixocreate\Schema\SchemaInterface;
-use Ixocreate\Type\TransformableInterface;
-use Ixocreate\Type\DatabaseTypeInterface;
-use Ixocreate\Type\TypeInterface;
 use Ixocreate\Entity\Definition;
 use Ixocreate\Entity\DefinitionCollection;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Entity\Type\Type;
 use Ixocreate\Schema\Builder;
+use Ixocreate\Schema\ElementInterface;
+use Ixocreate\Schema\SchemaInterface;
 use Ixocreate\Template\Renderer;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Type\TransformableInterface;
+use Ixocreate\Type\TypeInterface;
 
 final class BlockType extends AbstractType implements DatabaseTypeInterface
 {
@@ -57,8 +57,12 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
      */
     private $blockType;
 
-    public function __construct(Builder $builder, Renderer $renderer, ApplicationConfig $applicationConfig, BlockSubManager $blockSubManager)
-    {
+    public function __construct(
+        Builder $builder,
+        Renderer $renderer,
+        ApplicationConfig $applicationConfig,
+        BlockSubManager $blockSubManager
+    ) {
         $this->builder = $builder;
         $this->renderer = $renderer;
         $this->applicationConfig = $applicationConfig;

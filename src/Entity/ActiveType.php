@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\StringType;
-use Ixocreate\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class ActiveType extends AbstractType implements DatabaseTypeInterface
 {
@@ -32,7 +32,7 @@ final class ActiveType extends AbstractType implements DatabaseTypeInterface
 
     public function convertToDatabaseValue()
     {
-        return (string) $this;
+        return (string)$this;
     }
 
     public static function baseDatabaseType(): string

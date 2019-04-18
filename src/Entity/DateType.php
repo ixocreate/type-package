@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Ixocreate\Type\Entity;
 
+use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\BuilderInterface;
 use Ixocreate\Schema\ElementInterface;
 use Ixocreate\Schema\ElementProviderInterface;
-use Ixocreate\Type\DatabaseTypeInterface;
-use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Elements\DateElement;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class DateType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {

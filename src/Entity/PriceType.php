@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
+use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\BuilderInterface;
 use Ixocreate\Schema\ElementInterface;
 use Ixocreate\Schema\ElementProviderInterface;
-use Ixocreate\Type\DatabaseTypeInterface;
-use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Schema\Elements\PriceElement;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class PriceType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
@@ -37,8 +37,8 @@ final class PriceType extends AbstractType implements DatabaseTypeInterface, Ele
             return $default;
         }
 
-        $default['currency'] = (string) $value['currency'];
-        $default['price'] = (float) $value['price'];
+        $default['currency'] = (string)$value['currency'];
+        $default['price'] = (float)$value['price'];
 
         return $default;
     }
@@ -51,7 +51,7 @@ final class PriceType extends AbstractType implements DatabaseTypeInterface, Ele
         if (empty($this->value())) {
             return "";
         }
-        return (string) $this->value()['price'];
+        return (string)$this->value()['price'];
     }
 
     public function jsonSerialize()

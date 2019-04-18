@@ -11,8 +11,8 @@ namespace Ixocreate\Type\Entity;
 
 use Assert\Assertion;
 use Doctrine\DBAL\Types\GuidType;
-use Ixocreate\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Type\DatabaseTypeInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -47,7 +47,7 @@ final class UuidType extends AbstractType implements DatabaseTypeInterface
      */
     public function convertToDatabaseValue()
     {
-        return (string) $this;
+        return (string)$this;
     }
 
     /**

@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Ixocreate\Type\Entity\Factory;
 
-use Ixocreate\Type\Entity\SchemaType;
+use Ixocreate\Schema\Builder;
 use Ixocreate\ServiceManager\FactoryInterface;
 use Ixocreate\ServiceManager\ServiceManagerInterface;
-use Ixocreate\Schema\Builder;
+use Ixocreate\Type\Entity\SchemaType;
 
 final class SchemaTypeFactory implements FactoryInterface
 {
