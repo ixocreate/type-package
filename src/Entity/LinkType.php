@@ -7,21 +7,21 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Cms\Package\Repository\PageRepository;
-use Ixocreate\Cms\Package\Router\PageRoute;
-use Ixocreate\Schema\Package\BuilderInterface;
-use Ixocreate\Schema\Package\ElementInterface;
-use Ixocreate\Schema\Package\ElementProviderInterface;
-use Ixocreate\Type\Package\DatabaseTypeInterface;
-use Ixocreate\Entity\Package\Type\AbstractType;
-use Ixocreate\Entity\Package\Type\Type;
-use Ixocreate\Media\Package\Entity\Media;
-use Ixocreate\Media\Package\Repository\MediaRepository;
-use Ixocreate\Media\Package\Uri\Uri;
-use Ixocreate\Schema\Package\Elements\LinkElement;
+use Ixocreate\Cms\Repository\PageRepository;
+use Ixocreate\Cms\Router\PageRoute;
+use Ixocreate\Schema\BuilderInterface;
+use Ixocreate\Schema\ElementInterface;
+use Ixocreate\Schema\ElementProviderInterface;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
+use Ixocreate\Media\Entity\Media;
+use Ixocreate\Media\Repository\MediaRepository;
+use Ixocreate\Media\Uri\Uri;
+use Ixocreate\Schema\Elements\LinkElement;
 
 final class LinkType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {

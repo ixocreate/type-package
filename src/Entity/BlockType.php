@@ -7,23 +7,23 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Application\ApplicationConfig;
-use Ixocreate\Cms\Package\Block\BlockInterface;
-use Ixocreate\Cms\Package\Block\BlockSubManager;
-use Ixocreate\Schema\Package\ElementInterface;
-use Ixocreate\Schema\Package\SchemaInterface;
-use Ixocreate\Type\Package\TransformableInterface;
-use Ixocreate\Type\Package\DatabaseTypeInterface;
-use Ixocreate\Type\Package\TypeInterface;
-use Ixocreate\Entity\Package\Definition;
-use Ixocreate\Entity\Package\DefinitionCollection;
-use Ixocreate\Entity\Package\Type\AbstractType;
-use Ixocreate\Entity\Package\Type\Type;
-use Ixocreate\Schema\Package\Builder;
-use Ixocreate\Template\Package\Renderer;
+use Ixocreate\Cms\Block\BlockInterface;
+use Ixocreate\Cms\Block\BlockSubManager;
+use Ixocreate\Schema\ElementInterface;
+use Ixocreate\Schema\SchemaInterface;
+use Ixocreate\Type\TransformableInterface;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Type\TypeInterface;
+use Ixocreate\Entity\Definition;
+use Ixocreate\Entity\DefinitionCollection;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
+use Ixocreate\Schema\Builder;
+use Ixocreate\Template\Renderer;
 
 final class BlockType extends AbstractType implements DatabaseTypeInterface
 {
@@ -112,7 +112,7 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
             }
         }
 
-        return (new \Ixocreate\Schema\Package\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
+        return (new \Ixocreate\Schema\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
     }
 
     /**

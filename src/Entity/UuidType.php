@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Assert\Assertion;
 use Doctrine\DBAL\Types\GuidType;
-use Ixocreate\Type\Package\DatabaseTypeInterface;
-use Ixocreate\Entity\Package\Type\AbstractType;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Entity\Type\AbstractType;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 

@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package\Entity\Factory;
+namespace Ixocreate\Type\Entity\Factory;
 
-use Ixocreate\Type\Package\Entity\CollectionType;
+use Ixocreate\Type\Entity\CollectionType;
 use Ixocreate\ServiceManager\FactoryInterface;
 use Ixocreate\ServiceManager\ServiceManagerInterface;
-use Ixocreate\Schema\Package\Builder;
+use Ixocreate\Schema\Builder;
 
 final class CollectionTypeFactory implements FactoryInterface
 {

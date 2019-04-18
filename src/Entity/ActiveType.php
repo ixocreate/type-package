@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\StringType;
-use Ixocreate\Type\Package\DatabaseTypeInterface;
-use Ixocreate\Entity\Package\Type\AbstractType;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Entity\Type\AbstractType;
 
 final class ActiveType extends AbstractType implements DatabaseTypeInterface
 {

@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package;
+namespace Ixocreate\Type;
 
 interface TypeInterface extends \JsonSerializable
 {

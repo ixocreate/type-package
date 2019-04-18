@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package\Entity\Factory;
+namespace Ixocreate\Type\Entity\Factory;
 
-use Ixocreate\Type\Package\Entity\SchemaType;
+use Ixocreate\Type\Entity\SchemaType;
 use Ixocreate\ServiceManager\FactoryInterface;
 use Ixocreate\ServiceManager\ServiceManagerInterface;
-use Ixocreate\Schema\Package\Builder;
+use Ixocreate\Schema\Builder;
 
 final class SchemaTypeFactory implements FactoryInterface
 {

@@ -7,21 +7,21 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Type\Package\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Schema\Package\ElementInterface;
-use Ixocreate\Schema\Package\SchemaInterface;
-use Ixocreate\Schema\Package\SchemaProviderInterface;
-use Ixocreate\Schema\Package\SchemaReceiverInterface;
-use Ixocreate\Type\Package\TransformableInterface;
-use Ixocreate\Type\Package\DatabaseTypeInterface;
-use Ixocreate\Type\Package\TypeInterface;
-use Ixocreate\Entity\Package\Definition;
-use Ixocreate\Entity\Package\DefinitionCollection;
-use Ixocreate\Entity\Package\Type\AbstractType;
-use Ixocreate\Entity\Package\Type\Type;
-use Ixocreate\Schema\Package\Builder;
+use Ixocreate\Schema\ElementInterface;
+use Ixocreate\Schema\SchemaInterface;
+use Ixocreate\Schema\SchemaProviderInterface;
+use Ixocreate\Schema\SchemaReceiverInterface;
+use Ixocreate\Type\TransformableInterface;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Type\TypeInterface;
+use Ixocreate\Entity\Definition;
+use Ixocreate\Entity\DefinitionCollection;
+use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Entity\Type\Type;
+use Ixocreate\Schema\Builder;
 use Ixocreate\ServiceManager\ServiceManager;
 
 final class SchemaType extends AbstractType implements DatabaseTypeInterface, \Serializable
@@ -159,7 +159,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
             }
         }
 
-        return (new \Ixocreate\Schema\Package\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
+        return (new \Ixocreate\Schema\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
     }
 
     /**
