@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Package\Type\Entity;
+namespace Ixocreate\Type\Package\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Package\Schema\BuilderInterface;
-use Ixocreate\Package\Schema\ElementInterface;
-use Ixocreate\Package\Schema\ElementProviderInterface;
-use Ixocreate\Package\Type\DatabaseTypeInterface;
-use Ixocreate\Package\Entity\Type\AbstractType;
-use Ixocreate\Package\Schema\Elements\PriceElement;
+use Ixocreate\Schema\Package\BuilderInterface;
+use Ixocreate\Schema\Package\ElementInterface;
+use Ixocreate\Schema\Package\ElementProviderInterface;
+use Ixocreate\Type\Package\DatabaseTypeInterface;
+use Ixocreate\Entity\Package\Type\AbstractType;
+use Ixocreate\Schema\Package\Elements\PriceElement;
 
 final class PriceType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {

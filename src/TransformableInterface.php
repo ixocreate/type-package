@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Package\Type;
+namespace Ixocreate\Type\Package;
 
 /**
  * Interface TransformableInterface
- * @package Ixocreate\Package\Schema
+ * @package Ixocreate\Schema\Package
  */
 interface TransformableInterface
 {

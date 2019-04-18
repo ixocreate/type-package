@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Package\Type;
+namespace Ixocreate\Type\Package;
 
 interface DatabaseTypeInterface
 {

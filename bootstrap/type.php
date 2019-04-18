@@ -1,23 +1,23 @@
 <?php
-namespace Ixocreate\Package\Type;
+namespace Ixocreate\Type\Package;
 
-use Ixocreate\Package\Type\Entity\BlockContainerType;
-use Ixocreate\Package\Type\Entity\BlockType;
-use Ixocreate\Package\Type\Entity\CollectionType;
-use Ixocreate\Package\Type\Entity\ColorType;
-use Ixocreate\Package\Type\Entity\DateTimeType;
-use Ixocreate\Package\Type\Entity\DateType;
-use Ixocreate\Package\Type\Entity\EmailType;
-use Ixocreate\Package\Type\Entity\Factory\CollectionTypeFactory;
-use Ixocreate\Package\Type\Entity\Factory\SchemaTypeFactory;
-use Ixocreate\Package\Type\Entity\HtmlType;
-use Ixocreate\Package\Type\Entity\LinkType;
-use Ixocreate\Package\Type\Entity\MapType;
-use Ixocreate\Package\Type\Entity\PriceType;
-use Ixocreate\Package\Type\Entity\SchemaType;
-use Ixocreate\Package\Type\Entity\UuidType;
-use Ixocreate\Package\Type\Entity\YouTubeType;
-use Ixocreate\Package\Entity\Type\TypeConfigurator;
+use Ixocreate\Type\Package\Entity\BlockContainerType;
+use Ixocreate\Type\Package\Entity\BlockType;
+use Ixocreate\Type\Package\Entity\CollectionType;
+use Ixocreate\Type\Package\Entity\ColorType;
+use Ixocreate\Type\Package\Entity\DateTimeType;
+use Ixocreate\Type\Package\Entity\DateType;
+use Ixocreate\Type\Package\Entity\EmailType;
+use Ixocreate\Type\Package\Entity\Factory\CollectionTypeFactory;
+use Ixocreate\Type\Package\Entity\Factory\SchemaTypeFactory;
+use Ixocreate\Type\Package\Entity\HtmlType;
+use Ixocreate\Type\Package\Entity\LinkType;
+use Ixocreate\Type\Package\Entity\MapType;
+use Ixocreate\Type\Package\Entity\PriceType;
+use Ixocreate\Type\Package\Entity\SchemaType;
+use Ixocreate\Type\Package\Entity\UuidType;
+use Ixocreate\Type\Package\Entity\YouTubeType;
+use Ixocreate\Entity\Package\Type\TypeConfigurator;
 
 /** @var TypeConfigurator $type */
 $type->addType(EmailType::class);

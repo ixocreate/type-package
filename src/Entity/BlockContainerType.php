@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Package\Type\Entity;
+namespace Ixocreate\Type\Package\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Package\Cms\Block\BlockSubManager;
-use Ixocreate\Package\Type\DatabaseTypeInterface;
-use Ixocreate\Package\Type\TypeInterface;
-use Ixocreate\Package\Entity\Type\AbstractType;
-use Ixocreate\Package\Entity\Type\Type;
+use Ixocreate\Cms\Package\Block\BlockSubManager;
+use Ixocreate\Type\Package\DatabaseTypeInterface;
+use Ixocreate\Type\Package\TypeInterface;
+use Ixocreate\Entity\Package\Type\AbstractType;
+use Ixocreate\Entity\Package\Type\Type;
 
 final class BlockContainerType extends AbstractType implements DatabaseTypeInterface, \Countable
 {

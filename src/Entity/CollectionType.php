@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Package\Type\Entity;
+namespace Ixocreate\Type\Package\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Package\Schema\SchemaInterface;
-use Ixocreate\Package\Schema\SubSchemaReceiverInterface;
-use Ixocreate\Package\Type\DatabaseTypeInterface;
-use Ixocreate\Package\Entity\Type\AbstractType;
-use Ixocreate\Package\Entity\Type\Type;
-use Ixocreate\Package\Schema\Builder;
+use Ixocreate\Schema\Package\SchemaInterface;
+use Ixocreate\Schema\Package\SubSchemaReceiverInterface;
+use Ixocreate\Type\Package\DatabaseTypeInterface;
+use Ixocreate\Entity\Package\Type\AbstractType;
+use Ixocreate\Entity\Package\Type\Type;
+use Ixocreate\Schema\Package\Builder;
 use Ixocreate\ServiceManager\ServiceManager;
 
 final class CollectionType extends AbstractType implements DatabaseTypeInterface, \Iterator

@@ -7,21 +7,21 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\Package\Type\Entity;
+namespace Ixocreate\Type\Package\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Package\Schema\ElementInterface;
-use Ixocreate\Package\Schema\SchemaInterface;
-use Ixocreate\Package\Schema\SchemaProviderInterface;
-use Ixocreate\Package\Schema\SchemaReceiverInterface;
-use Ixocreate\Package\Type\TransformableInterface;
-use Ixocreate\Package\Type\DatabaseTypeInterface;
-use Ixocreate\Package\Type\TypeInterface;
-use Ixocreate\Package\Entity\Definition;
-use Ixocreate\Package\Entity\DefinitionCollection;
-use Ixocreate\Package\Entity\Type\AbstractType;
-use Ixocreate\Package\Entity\Type\Type;
-use Ixocreate\Package\Schema\Builder;
+use Ixocreate\Schema\Package\ElementInterface;
+use Ixocreate\Schema\Package\SchemaInterface;
+use Ixocreate\Schema\Package\SchemaProviderInterface;
+use Ixocreate\Schema\Package\SchemaReceiverInterface;
+use Ixocreate\Type\Package\TransformableInterface;
+use Ixocreate\Type\Package\DatabaseTypeInterface;
+use Ixocreate\Type\Package\TypeInterface;
+use Ixocreate\Entity\Package\Definition;
+use Ixocreate\Entity\Package\DefinitionCollection;
+use Ixocreate\Entity\Package\Type\AbstractType;
+use Ixocreate\Entity\Package\Type\Type;
+use Ixocreate\Schema\Package\Builder;
 use Ixocreate\ServiceManager\ServiceManager;
 
 final class SchemaType extends AbstractType implements DatabaseTypeInterface, \Serializable
@@ -159,7 +159,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
             }
         }
 
-        return (new \Ixocreate\Package\Schema\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
+        return (new \Ixocreate\Schema\Package\Entity\Schema($entityData, new DefinitionCollection($definitions)))->toArray();
     }
 
     /**
