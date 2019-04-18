@@ -18,8 +18,8 @@ use Ixocreate\Schema\Package\SchemaInterface;
 use Ixocreate\Type\Package\TransformableInterface;
 use Ixocreate\Type\Package\DatabaseTypeInterface;
 use Ixocreate\Type\Package\TypeInterface;
-use Ixocreate\Entity\Package\Entity\Definition;
-use Ixocreate\Entity\Package\Entity\DefinitionCollection;
+use Ixocreate\Entity\Package\Definition;
+use Ixocreate\Entity\Package\DefinitionCollection;
 use Ixocreate\Entity\Package\Type\AbstractType;
 use Ixocreate\Entity\Package\Type\Type;
 use Ixocreate\Schema\Package\Builder;
@@ -41,6 +41,7 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
      * @var ApplicationConfig
      */
     private $applicationConfig;
+
     /**
      * @var BlockSubManager
      */
@@ -201,9 +202,9 @@ final class BlockType extends AbstractType implements DatabaseTypeInterface
      */
     public function serialize()
     {
-        return serialize([
+        return \serialize([
             'value' => $this->value,
-            'blockType' => $this->blockType
+            'blockType' => $this->blockType,
         ]);
     }
 

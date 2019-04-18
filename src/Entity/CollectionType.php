@@ -49,8 +49,8 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     /**
      * Doesn't work when the object is unserialized!
      *
-     * @return SchemaInterface|null
      * @throws \Exception
+     * @return SchemaInterface|null
      */
     private function getSchema(): ?SchemaInterface
     {
@@ -94,8 +94,8 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
 
     /**
      * @param $value
-     * @return mixed
      * @throws \Exception
+     * @return mixed
      */
     protected function transform($value)
     {

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Ixocreate\Type\Package;
 
-use Ixocreate\Application\ConfiguratorRegistryInterface;
-use Ixocreate\Application\Package\PackageInterface;
-use Ixocreate\Application\Service\ServiceRegistryInterface;
+use Ixocreate\Application\PackageInterface;
+use Ixocreate\Application\Service\Configurator\ConfiguratorRegistryInterface;
+use Ixocreate\Application\Service\Registry\ServiceRegistryInterface;
 use Ixocreate\ServiceManager\ServiceManagerInterface;
 
 final class Package implements PackageInterface
