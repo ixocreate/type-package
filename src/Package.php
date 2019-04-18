@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes;
+namespace Ixocreate\Package\Type;
 
-use Ixocreate\Contract\Application\ConfiguratorRegistryInterface;
-use Ixocreate\Contract\Application\PackageInterface;
-use Ixocreate\Contract\Application\ServiceRegistryInterface;
-use Ixocreate\Contract\ServiceManager\ServiceManagerInterface;
+use Ixocreate\Application\ConfiguratorRegistryInterface;
+use Ixocreate\Application\PackageInterface;
+use Ixocreate\Application\ServiceRegistryInterface;
+use Ixocreate\ServiceManager\ServiceManagerInterface;
 
 final class Package implements PackageInterface
 {
@@ -52,7 +52,7 @@ final class Package implements PackageInterface
      */
     public function getBootstrapDirectory(): ?string
     {
-        return __DIR__ . '/../bootstrap';
+        return __DIR__ . '/../../../bootstrap';
     }
 
     /**
