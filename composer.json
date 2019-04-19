@@ -13,7 +13,7 @@
     "require": {
         "php": "^7.1",
         "ext-json": "*",
-        "ixocreate/application": "dev-develop",
+        "ixocreate/application": "^0.1",
         "nadar/quill-delta-parser": "^1.1",
         "beberlei/assert": "^2.9",
         "ramsey/uuid": "^3.7"
