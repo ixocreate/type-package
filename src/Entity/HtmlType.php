@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Entity\Type\Type;
+use Ixocreate\Type\DatabaseTypeInterface;
 use nadar\quill\InlineListener;
 use nadar\quill\Lexer;
 use nadar\quill\Line;
@@ -64,7 +64,10 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
                     if ($link) {
                         /** @var LinkType $link */
                         $link = Type::create($link, LinkType::serviceName());
-                        $this->updateInput($line, '<a href="' . (string) $link . '" target="' . $link->getTarget() . '">' . $line->input . '</a>');
+                        $this->updateInput(
+                            $line,
+                            '<a href="' . (string)$link . '" target="' . $link->getTarget() . '">' . $line->input . '</a>'
+                        );
                     }
                 } catch (\Exception $exception) {
                 }

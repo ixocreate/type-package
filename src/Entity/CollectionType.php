@@ -7,16 +7,17 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Contract\Schema\SchemaInterface;
-use Ixocreate\Contract\Schema\SubSchemaReceiverInterface;
-use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Entity\Type\Type;
 use Ixocreate\Schema\Builder;
+use Ixocreate\Schema\SchemaInterface;
+use Ixocreate\Schema\SubSchemaReceiverInterface;
 use Ixocreate\ServiceManager\ServiceManager;
+use Ixocreate\ServiceManager\ServiceManagerInterface;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class CollectionType extends AbstractType implements DatabaseTypeInterface, \Iterator
 {
@@ -37,10 +38,11 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
 
     /**
      * CollectionType constructor.
-     * @param ServiceManager $serviceManager
+     *
+     * @param ServiceManagerInterface $serviceManager
      * @param Builder $builder
      */
-    public function __construct(ServiceManager $serviceManager, Builder $builder)
+    public function __construct(ServiceManagerInterface $serviceManager, Builder $builder)
     {
         $this->serviceManager = $serviceManager;
         $this->builder = $builder;
@@ -49,8 +51,8 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
     /**
      * Doesn't work when the object is unserialized!
      *
-     * @return SchemaInterface|null
      * @throws \Exception
+     * @return SchemaInterface|null
      */
     private function getSchema(): ?SchemaInterface
     {
@@ -81,7 +83,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
                 }
             }
 
-            if (! ($receiver instanceof SubSchemaReceiverInterface)) {
+            if (!($receiver instanceof SubSchemaReceiverInterface)) {
                 throw new \Exception($this->options['subSchema'] . " must implement " . SubSchemaReceiverInterface::class);
             }
 
@@ -94,8 +96,8 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
 
     /**
      * @param $value
-     * @return mixed
      * @throws \Exception
+     * @return mixed
      */
     protected function transform($value)
     {
@@ -223,6 +225,7 @@ final class CollectionType extends AbstractType implements DatabaseTypeInterface
 
     /**
      * Return the key of the current element
+     *
      * @see http://php.net/manual/en/iterator.key.php
      * @return mixed scalar on success, or null on failure
      * @since 5.0.0

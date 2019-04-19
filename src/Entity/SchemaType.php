@@ -7,22 +7,22 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Contract\Schema\ElementInterface;
-use Ixocreate\Contract\Schema\SchemaInterface;
-use Ixocreate\Contract\Schema\SchemaProviderInterface;
-use Ixocreate\Contract\Schema\SchemaReceiverInterface;
-use Ixocreate\Contract\Type\TransformableInterface;
-use Ixocreate\Contract\Type\DatabaseTypeInterface;
-use Ixocreate\Contract\Type\TypeInterface;
-use Ixocreate\Entity\Entity\Definition;
-use Ixocreate\Entity\Entity\DefinitionCollection;
+use Ixocreate\Entity\Definition;
+use Ixocreate\Entity\DefinitionCollection;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Entity\Type\Type;
 use Ixocreate\Schema\Builder;
+use Ixocreate\Schema\ElementInterface;
+use Ixocreate\Schema\SchemaInterface;
+use Ixocreate\Schema\SchemaProviderInterface;
+use Ixocreate\Schema\SchemaReceiverInterface;
 use Ixocreate\ServiceManager\ServiceManager;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Type\TransformableInterface;
+use Ixocreate\Type\TypeInterface;
 
 final class SchemaType extends AbstractType implements DatabaseTypeInterface, \Serializable
 {
@@ -48,6 +48,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
 
     /**
      * SchemaType constructor.
+     *
      * @param ServiceManager $serviceManager
      * @param Builder $builder
      */
@@ -77,7 +78,10 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
         }
 
         if ($provider !== null) {
-            if (!\is_array($provider) || !\array_key_exists('class', $provider) || !\array_key_exists('name', $provider)) {
+            if (!\is_array($provider) || !\array_key_exists('class', $provider) || !\array_key_exists(
+                'name',
+                $provider
+            )) {
                 throw new \Exception('Invalid schema provider');
             }
             if (empty($provider['options'])) {
@@ -85,7 +89,10 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
             }
         }
         // TODO: remove when migration is done
-        if (empty($options['schema']) &&  \array_key_exists('__receiver__', $value) && \array_key_exists('__value__', $value)) {
+        if (empty($options['schema']) && \array_key_exists('__receiver__', $value) && \array_key_exists(
+            '__value__',
+            $value
+        )) {
             $receiverData = $value['__receiver__'];
             $value = $value['__value__'];
 
@@ -106,7 +113,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
             if ($receiver instanceof SchemaReceiverInterface) {
                 $options['schema'] = $receiver->receiveSchema($this->builder, $receiverData['options']);
             } else {
-                if (! ($receiver instanceof SchemaProviderInterface)) {
+                if (!($receiver instanceof SchemaProviderInterface)) {
                     throw new \Exception("receiver must implement " . SchemaProviderInterface::class . ' or ' . SchemaReceiverInterface::class);
                 }
 
@@ -196,11 +203,15 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
                 }
             }
 
-            if (! ($provider instanceof SchemaProviderInterface)) {
+            if (!($provider instanceof SchemaProviderInterface)) {
                 throw new \Exception("provider must implement " . SchemaProviderInterface::class);
             }
 
-            $this->schema = $provider->provideSchema($this->provider['name'], $this->builder, $this->provider['options']);
+            $this->schema = $provider->provideSchema(
+                $this->provider['name'],
+                $this->builder,
+                $this->provider['options']
+            );
             return $this->schema;
         }
 
@@ -254,7 +265,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
             $values[$name] = $val;
         }
         return [
-            '__provider__'  => $this->provider,
+            '__provider__' => $this->provider,
             '__value__' => $values,
         ];
     }
@@ -262,7 +273,7 @@ final class SchemaType extends AbstractType implements DatabaseTypeInterface, \S
     public function __debugInfo()
     {
         return [
-            '__provider__'  => $this->provider,
+            '__provider__' => $this->provider,
             '__value__' => $this->value(),
         ];
     }

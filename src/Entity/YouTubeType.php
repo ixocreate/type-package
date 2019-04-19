@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\StringType;
-use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class YouTubeType extends AbstractType implements DatabaseTypeInterface
 {
@@ -29,7 +29,7 @@ final class YouTubeType extends AbstractType implements DatabaseTypeInterface
      */
     public function convertToDatabaseValue()
     {
-        return (string) $this;
+        return (string)$this;
     }
 
     /**

@@ -1,25 +1,26 @@
 <?php
-namespace Ixocreate\CommonTypes;
 
-use Ixocreate\CommonTypes\Entity\BlockContainerType;
-use Ixocreate\CommonTypes\Entity\BlockType;
-use Ixocreate\CommonTypes\Entity\CollectionType;
-use Ixocreate\CommonTypes\Entity\ColorType;
-use Ixocreate\CommonTypes\Entity\DateTimeType;
-use Ixocreate\CommonTypes\Entity\DateType;
-use Ixocreate\CommonTypes\Entity\EmailType;
-use Ixocreate\CommonTypes\Entity\Factory\CollectionTypeFactory;
-use Ixocreate\CommonTypes\Entity\Factory\SchemaTypeFactory;
-use Ixocreate\CommonTypes\Entity\HtmlType;
-use Ixocreate\CommonTypes\Entity\LinkType;
-use Ixocreate\CommonTypes\Entity\MapType;
-use Ixocreate\CommonTypes\Entity\PriceType;
-use Ixocreate\CommonTypes\Entity\SchemaType;
-use Ixocreate\CommonTypes\Entity\UuidType;
-use Ixocreate\CommonTypes\Entity\YouTubeType;
-use Ixocreate\Entity\Type\TypeConfigurator;
+namespace Ixocreate\Type;
+
+use Ixocreate\Type\Entity\BlockContainerType;
+use Ixocreate\Type\Entity\BlockType;
+use Ixocreate\Type\Entity\CollectionType;
+use Ixocreate\Type\Entity\ColorType;
+use Ixocreate\Type\Entity\DateTimeType;
+use Ixocreate\Type\Entity\DateType;
+use Ixocreate\Type\Entity\EmailType;
+use Ixocreate\Type\Entity\Factory\CollectionTypeFactory;
+use Ixocreate\Type\Entity\Factory\SchemaTypeFactory;
+use Ixocreate\Type\Entity\HtmlType;
+use Ixocreate\Type\Entity\LinkType;
+use Ixocreate\Type\Entity\MapType;
+use Ixocreate\Type\Entity\PriceType;
+use Ixocreate\Type\Entity\SchemaType;
+use Ixocreate\Type\Entity\UuidType;
+use Ixocreate\Type\Entity\YouTubeType;
 
 /** @var TypeConfigurator $type */
+
 $type->addType(EmailType::class);
 $type->addType(ColorType::class);
 $type->addType(UuidType::class);

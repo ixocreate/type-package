@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Cms\Block\BlockSubManager;
-use Ixocreate\Contract\Type\DatabaseTypeInterface;
-use Ixocreate\Contract\Type\TypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Entity\Type\Type;
+use Ixocreate\Type\DatabaseTypeInterface;
+use Ixocreate\Type\TypeInterface;
 
 final class BlockContainerType extends AbstractType implements DatabaseTypeInterface, \Countable
 {
@@ -25,6 +25,7 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
 
     /**
      * BlockType constructor.
+     *
      * @param BlockSubManager $blockSubManager
      */
     public function __construct(BlockSubManager $blockSubManager)
@@ -112,7 +113,7 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
 
         foreach ($this->value() as $block) {
             try {
-                $return[] = (string) $block;
+                $return[] = (string)$block;
             } catch (\Throwable $exception) {
             }
         }
@@ -129,7 +130,10 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
 
         foreach ($blocks as $blockName) {
             if (\mb_strpos($blockName, '*') === false) {
-                if (\array_key_exists($blockName, $this->blockSubManager->getServiceManagerConfig()->getNamedServices())) {
+                if (\array_key_exists(
+                    $blockName,
+                    $this->blockSubManager->getServiceManagerConfig()->getNamedServices()
+                )) {
                     $parsedBlocks[] = $blockName;
                 }
                 continue;
@@ -174,7 +178,7 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
         }
 
         return [
-            '__blocks__'  => $this->blocks(),
+            '__blocks__' => $this->blocks(),
             '__value__' => $values,
         ];
     }
@@ -186,6 +190,7 @@ final class BlockContainerType extends AbstractType implements DatabaseTypeInter
 
     /**
      * Count elements of an object
+     *
      * @see https://php.net/manual/en/countable.count.php
      * @return int The custom count as an integer.
      * </p>

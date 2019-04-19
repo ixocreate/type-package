@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
-use Ixocreate\Contract\Schema\BuilderInterface;
-use Ixocreate\Contract\Schema\ElementInterface;
-use Ixocreate\Contract\Schema\ElementProviderInterface;
-use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
+use Ixocreate\Schema\BuilderInterface;
+use Ixocreate\Schema\ElementInterface;
+use Ixocreate\Schema\ElementProviderInterface;
 use Ixocreate\Schema\Elements\MapElement;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class MapType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
@@ -37,8 +37,8 @@ final class MapType extends AbstractType implements DatabaseTypeInterface, Eleme
             return $default;
         }
 
-        $default['lat'] = (float) $value['lat'];
-        $default['lng'] = (float) $value['lng'];
+        $default['lat'] = (float)$value['lat'];
+        $default['lng'] = (float)$value['lng'];
 
         return $default;
     }

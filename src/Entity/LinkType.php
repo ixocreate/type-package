@@ -7,21 +7,21 @@
 
 declare(strict_types=1);
 
-namespace Ixocreate\CommonTypes\Entity;
+namespace Ixocreate\Type\Entity;
 
 use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Cms\Repository\PageRepository;
 use Ixocreate\Cms\Router\PageRoute;
-use Ixocreate\Contract\Schema\BuilderInterface;
-use Ixocreate\Contract\Schema\ElementInterface;
-use Ixocreate\Contract\Schema\ElementProviderInterface;
-use Ixocreate\Contract\Type\DatabaseTypeInterface;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Entity\Type\Type;
 use Ixocreate\Media\Entity\Media;
 use Ixocreate\Media\Repository\MediaRepository;
-use Ixocreate\Media\Uri\Uri;
+use Ixocreate\Media\Uri\MediaUri;
+use Ixocreate\Schema\BuilderInterface;
+use Ixocreate\Schema\ElementInterface;
+use Ixocreate\Schema\ElementProviderInterface;
 use Ixocreate\Schema\Elements\LinkElement;
+use Ixocreate\Type\DatabaseTypeInterface;
 
 final class LinkType extends AbstractType implements DatabaseTypeInterface, ElementProviderInterface
 {
@@ -41,23 +41,23 @@ final class LinkType extends AbstractType implements DatabaseTypeInterface, Elem
     private $pageRoute;
 
     /**
-     * @var Uri
+     * @var MediaUri
      */
     private $uri;
 
     /**
      * LinkType constructor.
      *
-     * @param PageRepository  $pageRepository
+     * @param PageRepository $pageRepository
      * @param MediaRepository $mediaRepository
-     * @param PageRoute       $pageRoute
-     * @param Uri             $uri
+     * @param PageRoute $pageRoute
+     * @param MediaUri $uri
      */
     public function __construct(
         PageRepository $pageRepository,
         MediaRepository $mediaRepository,
         PageRoute $pageRoute,
-        Uri $uri
+        MediaUri $uri
     ) {
         $this->pageRepository = $pageRepository;
         $this->mediaRepository = $mediaRepository;

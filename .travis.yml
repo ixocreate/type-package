@@ -1,22 +1,26 @@
 language: php
 sudo: false
+
 php:
-- '7.1'
-- '7.2'
+  - "7.1"
+  - "7.2"
+  - "7.3"
+
 cache:
   directories:
-  - "$HOME/.composer/cache"
-before_script:
-- composer install --prefer-dist --no-interaction
-- composer require --dev php-coveralls/php-coveralls
+    - $HOME/.composer/cache
+
+install:
+  - composer install --prefer-dist --no-interaction
+
 script:
-- mkdir -p build/logs
-- vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-- vendor/bin/php-cs-fixer fix --config=vendor/ixocreate/coding-standard/.php_cs -v --dry-run --using-cache=no --path-mode=intersection
-  `git diff --name-only --diff-filter=ACMRTUXB $TRAVIS_COMMIT_RANGE`
+  - if [ $TRAVIS_PHP_VERSION = '7.2' ]; then vendor/bin/phpunit --coverage-clover build/logs/clover.xml; else vendor/bin/phpunit; fi
+  - if [ $TRAVIS_PHP_VERSION = '7.2' ]; then vendor/bin/php-cs-fixer fix --config=vendor/ixocreate/coding-standard/.php_cs -v --dry-run --using-cache=no --path-mode=intersection `git diff --name-only --diff-filter=ACMRTUXB $TRAVIS_COMMIT_RANGE`; fi
+
 after_success:
-- travis_retry php vendor/bin/php-coveralls -v
+  - if [ $TRAVIS_PHP_VERSION = '7.2' ]; then php vendor/bin/php-coveralls -v; fi
+
 notifications:
   email: false
   slack:
-    secure: D8n3a+huB9ZEBE3pILS4ObLAtjW+OTCJUUgVL8aQ9q19N1XI9nd+dS5AEyluWPyTnvFdBHaT7aTNog5RMvSE8jrrW5+9L0lx++qLelSd5qrtnQB0zLtUR0HEaxn6LEQ8cUbch8o3vOy0w5EsFI6v+EQugByrHdCj64P14Tj9YpE57kSMjYBfh6jVbMg7a9XRkk8stx0VluQgQSJuKYQ/B2T8gkxKc+Q49e7frG2eqylxzKhRH3TTFl8L2DRgqPGQCKgpSYgNg6mdy9YpUdys622rC93AQwRJpFnmeQM44VyabHxWc9LW7zy3AZAZbH4IzYWyQM8R2nkqZ0UXPjxNto1s5j+jhPTFLmF0TvsoyrxT4P9bkeGqPC18jE+V4J11jaAfgWUKC3Ey7Mh5+kPYGyu7qgReXJMzyq2+JbwDy66dyNaZLsevPxoOjDlPIviRuNgHqM8pfITqEeUNxjj+GpGEwSpcu2lutePBWeLwLQ7A+F8fw8OOByrY7l4iF/tzdwLaDW4DJCpNqtaHqzTqsZb6NnzEO1ZDCqAJYX2FjI6LX4fJlqHk5hrYoIV4REPNFMn/gwxhW8LknwTyH7O9NJBmEkmAHEOOdYwHea1vY5IFBCBbDW0yFYzbkCGRkE5zkiJi7IrLcpDhehhrIpqZ3RpLtoH+hmL48Gz9X+1SCu4=
+    secure: "L2akSQJzUhjtL4qqFmQ4sMm1qg5UC/hdxaAvcs+244bM1zwxjIP7wPlC5TVstxR52IFLFeZVay9wEiCdULNL5MyP6afRw6qiBES9M3NPF8v0HaCHWfErkz1EjrQ9QtyRGww0YU85KTV4EGCe+xGkgrNkEfTWL4iL/nHoCqRJr9Yo051zV2/C1/8DfGqgkeYNjlXeiy+gwvcKiIJtpsRAXB6fKl61ylvnr3/sPEtRsMvssWG8V/xZHJKzkF0R6oDl5YwIxTSq1Oon6YYYoBUpXuogLLKhasL+M0/GA6Af7pTDRizp7teqIqxrMIpBLk7BLfOgtHuSr0VKo0Orw5igkZBaqpkKuWKt0zF3CwaqlmUp9lkMdvDe1U+9b7CzyM1hFqiuYD+6gR6KPwGyiz7+wXs/RRGc9ioqpxaw4+Ht4lqquYeiroP2KYTTkNkQEiiYfvpyZvxA9M8Om+Mn6gMEXkd3zU2TVswCHkjhvXYPACs9Zoj3Ne5GxGQriQTAgRZHX2285J0F1XMttMsribJK2fMDmDzvAfDpSz+uzaDnwV4ikRZjg35qh6iXUUG0A/g0uCUv7XTBQiGWjAafNA77JW4+/MgTRxRIUJ1EHq3l6e73wnm2OPhTApVLxaABmUtCDdSyvwdsm++PwvzcacY5Rp6J1twy9wPSCyYY/qeWc7w="
