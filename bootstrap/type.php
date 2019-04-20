@@ -1,4 +1,11 @@
 <?php
+/**
+ * @link https://github.com/ixocreate
+ * @copyright IXOCREATE GmbH
+ * @license MIT License
+ */
+
+declare(strict_types=1);
 
 namespace Ixocreate\Type;
 
@@ -20,7 +27,6 @@ use Ixocreate\Type\Entity\UuidType;
 use Ixocreate\Type\Entity\YouTubeType;
 
 /** @var TypeConfigurator $type */
-
 $type->addType(EmailType::class);
 $type->addType(ColorType::class);
 $type->addType(UuidType::class);
