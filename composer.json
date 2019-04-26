@@ -12,13 +12,14 @@
         "php": "^7.1",
         "ext-json": "*",
         "ixocreate/application": "^0.1",
-        "ixocreate/schema-package": "^0.1",
         "nadar/quill-delta-parser": "^1.1",
         "beberlei/assert": "^2.9",
         "ramsey/uuid": "^3.7"
     },
     "require-dev": {
         "ixocreate/coding-standard": "^2.0",
+        "ixocreate/entity-package": "^0.1",
+        "ixocreate/schema-package": "^0.1",
         "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit": "^7.0"
     },
