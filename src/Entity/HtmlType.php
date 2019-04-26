@@ -13,6 +13,7 @@ use Doctrine\DBAL\Types\JsonType;
 use Ixocreate\Entity\Type\AbstractType;
 use Ixocreate\Entity\Type\Type;
 use Ixocreate\Type\DatabaseTypeInterface;
+use nadar\quill\BlockListener;
 use nadar\quill\InlineListener;
 use nadar\quill\Lexer;
 use nadar\quill\Line;
@@ -70,6 +71,41 @@ final class HtmlType extends AbstractType implements DatabaseTypeInterface
                         );
                     }
                 } catch (\Exception $exception) {
+                }
+            }
+        });
+
+        $lexer->registerListener(new class() extends BlockListener {
+            /**
+             * @param Line $line
+             * @return void
+             */
+            public function process(Line $line)
+            {
+                $linebreak = $line->getAttribute('linebreak');
+                if ($linebreak === 'true') {
+                    $this->pick($line);
+                    $line->setDone();
+                }
+            }
+
+            public function render(Lexer $lexer)
+            {
+                foreach ($this->picks() as $pick) {
+                    // get all
+                    $prev = $pick->line->previous(function (Line $line) {
+                        if (!$line->isInline()) {
+                            return true;
+                        }
+                    });
+
+                    // if there is no previous element, we take the same line element.
+                    if (!$prev) {
+                        $prev = $pick->line;
+                    }
+
+                    $pick->line->output = $prev->input . $pick->line->renderPrepend() . '<br>';
+                    $prev->setDone();
                 }
             }
         });
